@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-tt-common-pro, sans-serif);
+  --font-mono: var(--font-tt-common-pro-mono, monospace);
+  --background: #232326;
+  --foreground: #FFFFFF;
+  --color-varient-1:#DEDAD7;
+  --color-varient-2:#232326;
+  --color-muted: #94A3B8;
+  --color-primary: #94A3B8;
+  --color-secondary: #CBD5E1;
+ 
+  --color-accent-1: #FE4849;
+  --color-accent-2: #276CBF;
+  --color-accent-3: #FFC400;
+  --color-accent-4: #9282ED;
+}
+
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+.pov {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.die {
+  perspective: 999px;
+}
+
+.cube {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  backface-visibility: hidden;
+}
