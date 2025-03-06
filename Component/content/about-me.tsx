@@ -98,6 +98,7 @@ export default function AboutMe() {
           scrub: true,
           pin: true,
           pinSpacing: true,
+          anticipatePin: 1,
         },
       })
       .to(sectionRef.current, {
@@ -144,7 +145,7 @@ export default function AboutMe() {
       {/* </div> */}
 
       {/* Title */}
-      <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold text-left uppercase">
+      <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold uppercase">
         <ScrollText text={"Hi, I'm Mario"} triggerRef={sectionRef} />
       </h2>
 

@@ -10,13 +10,17 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.0.3",
+    "@react-three/fiber": "^9.0.4",
     "gsap": "^3.12.7",
     "lenis": "^1.1.22",
     "lucide-react": "^0.476.0",
     "motion": "^12.4.7",
     "next": "15.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-parallax-tilt": "^1.7.284",
+    "three": "^0.174.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

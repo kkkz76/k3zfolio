@@ -8,8 +8,9 @@
   --color-varient-1:#DEDAD7;
   --color-varient-2:#232326;
   --color-muted: #94A3B8;
-  --color-primary: #94A3B8;
+  --color-primary: #4B5563;
   --color-secondary: #CBD5E1;
+ 
  
   --color-accent-1: #FE4849;
   --color-accent-2: #276CBF;
@@ -23,10 +24,12 @@ body {
   background: var(--background);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  /* margin-top: 50vh;
+  margin-bottom: 100vh; */
 }
 .pov {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,4 +53,12 @@ body {
   justify-content: center;
   font-weight: 900;
   backface-visibility: hidden;
+}
+
+.image-object {
+  filter: grayscale(90%);
+}
+
+.image-object:hover {
+  filter: grayscale(0%);
 }

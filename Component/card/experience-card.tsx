@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface TimelineItem {
   date: string;
@@ -10,58 +10,55 @@ interface TimelineItem {
 
 interface ExperienceCardProps {
   event: TimelineItem;
-  index: number;
+  direction: "left" | "right";
 }
 
-const InnerCard = {
+/** Variants for hover animation */
+const cardVariants = {
   hover: {
-    backgroundColor: "var(--foreground)",
-    color: "var(--background)",
-    transition: { duration: 0.2, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: "easeIn" },
   },
 };
 
-const OuterCard = {
-  hover: {
-    borderColor: "var(--color-primary)",
-    transition: { duration: 0.3, ease: "easeInOut" },
-  },
+const overlayVariants = {
+  initial: { width: "0%" },
+  hover: { width: "100%", transition: { duration: 0.3, ease: "easeIn" } },
 };
 
-const descriptionVariants = {
-  hover: {
-    y: -5,
-    maxHeight: "100px",
-    opacity: 1,
-    transition: { duration: 0.2, ease: "easeInOut" },
-  },
+const textVariants = {
+  initial: { opacity: 0 },
+  hover: { opacity: 1, transition: { duration: 0.5, ease: "easeIn" } },
 };
 
-const ExperienceCard = ({ event, index }: ExperienceCardProps) => {
+const ExperienceCard = ({ event, direction }: ExperienceCardProps) => {
   return (
     <motion.div
-      className="relative flex items-center w-5/12 min-h-[130px] border border-black cursor-pointer overflow-hidden p-4 shadow-lg"
-      variants={OuterCard}
+      className="relative group flex items-center w-full min-h-28 cursor-pointer overflow-hidden"
+      variants={cardVariants}
       initial="initial"
       whileHover="hover"
     >
+      {/* Background Hover Overlay */}
       <motion.div
-        className={`flex flex-col w-full ${
-          index % 2 === 0 ? "text-right" : "text-left"
-        }`}
+        className={`absolute top-0 ${
+          direction === "left" ? "left-0" : "right-0"
+        }  h-full z-10 flex items-center justify-center bg-gray-200 text-black`}
+        variants={overlayVariants}
       >
-        <p className="text-sm ">{event.date}</p>
-        <div className="flex flex-col justify-between">
-          <h3 className="text-sm lg:text-2xl font-bold">{event.title}</h3>
-          <h3 className="text-sm lg:text-lg font-medium">{event.company}</h3>
-        </div>
-
-        {/* <motion.p
-          className="text-gray-700 dark:text-gray-300 max-h-0 overflow-hidden"
-          variants={descriptionVariants}
+        <motion.div
+          className="text-center text-foreground flex flex-col gap-2"
+          variants={textVariants}
         >
-          {event.description}
-        </motion.p> */}
+          <h3 className="text-4xl font-bold">{event.company}</h3>
+          <p className="text-md ">{event.date}</p>
+        </motion.div>
+      </motion.div>
+
+      {/* Text Content */}
+      <motion.div className=" flex w-full ">
+        <h3 className="text-5xl w-full font-bold text-center ">
+          {event.title}
+        </h3>
       </motion.div>
     </motion.div>
   );
