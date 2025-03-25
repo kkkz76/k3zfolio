@@ -55,39 +55,25 @@ const ContactMe = () => {
   };
 
   return (
-    <section className="relative flex flex-col w-full min-h-dvh justify-center items-center bg-[var(--background)] overflow-hidden">
-      <div className="relative flex flex-col gap-4 text-center">
-        <h4 className="text-2xl">GOT A PROJECT IN MIND?</h4>
-        <h3 className="text-8xl font-bold">LET&apos;S CONNECT</h3>
-        <div
-          ref={containerRef}
-          className="pointer-events-auto 
-                     w-full h-20 flex justify-center items-center mt-5 "
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          {/* Bottom circle (STAYS IN PLACE) */}
+    <div className="container mx-auto p-6 gap-10">
+      <section className="relative flex flex-col w-full min-h-dvh justify-center items-center bg-[var(--background)] overflow-hidden">
+        <div className="relative flex flex-col gap-4 text-center">
+          <h4 className="text-2xl">GOT A PROJECT IN MIND?</h4>
+          <h3 className="text-8xl font-bold">LET&apos;S CONNECT</h3>
           <div
-            className="relative w-20 h-20 rounded-full border border-white 
-                       flex items-center justify-center  cursor-pointer"
+            ref={containerRef}
+            className="pointer-events-auto 
+                     w-full h-20 flex justify-center items-center mt-5 "
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
-            {/* Optional icon or design inside the bottom circle */}
-            {/* For example, a small dotted shape or a different arrow */}
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></svg>
+            {/* Bottom circle (STAYS IN PLACE) */}
             <div
-              ref={topCircleRef}
-              className="absolute top-0 left-0 w-20 h-20 rounded-full border border-white 
-                       flex items-center justify-center cursor-pointer"
+              className="relative w-20 h-20 rounded-full border border-white 
+                       flex items-center justify-center  cursor-pointer"
             >
-              {/* Icon/arrow inside top circle */}
+              {/* Optional icon or design inside the bottom circle */}
+              {/* For example, a small dotted shape or a different arrow */}
               <svg
                 width="24"
                 height="24"
@@ -96,33 +82,49 @@ const ContactMe = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+              ></svg>
+              <div
+                ref={topCircleRef}
+                className="absolute top-0 left-0 w-20 h-20 rounded-full border border-white 
+                       flex items-center justify-center cursor-pointer"
               >
-                <path d="M5 19L19 5M5 5h14v14" />
-              </svg>
+                {/* Icon/arrow inside top circle */}
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 19L19 5M5 5h14v14" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <footer className="absolute bottom-0 w-full min-h-40 justify-center flex flex-col gap-4 p-6">
-        <div className="w-full flex justify-between items-center">
-          <div>
-            <h3 className="text-xl uppercase ">
-              Feel Free to connect me on social
-            </h3>
+        <footer className="absolute bottom-0 w-full min-h-40 justify-center flex flex-col gap-4 p-6">
+          <div className="w-full flex justify-between items-center">
+            <div>
+              <h3 className="text-xl uppercase ">
+                Feel Free to connect me on social
+              </h3>
+            </div>
+            <div className="flex uppercase gap-8">
+              <HoverText text={"linkedIn"} />
+              <HoverText text={"Github"} />
+              <HoverText text={"Instagram"} />
+              <HoverText text={"Resume"} />
+            </div>
           </div>
-          <div className="flex uppercase gap-8">
-            <HoverText text={"linkedIn"} />
-            <HoverText text={"Github"} />
-            <HoverText text={"Instagram"} />
-            <HoverText text={"Resume"} />
-          </div>
-        </div>
-        <div></div>
-        <p className="uppercase text-xs font-extralight">
-          Made with Love by mario
-        </p>
-      </footer>
-    </section>
+          <div></div>
+          <p className="uppercase text-xs font-extralight">
+            Made with Love by mario
+          </p>
+        </footer>
+      </section>
+    </div>
   );
 };
 

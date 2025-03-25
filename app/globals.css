@@ -21,7 +21,7 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: black;
   font-family: var(--font-sans);
   overflow-x: hidden;
   /* margin-top: 50vh;
@@ -61,4 +61,19 @@ body {
 
 .image-object:hover {
   filter: grayscale(0%);
+}
+
+/* For WebKit browsers (Chrome, Safari, Opera) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+body {
+  scrollbar-width: none;
+}
+
+/* For IE and Edge (legacy) */
+body {
+  -ms-overflow-style: none;
 }

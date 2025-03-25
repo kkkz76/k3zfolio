@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollText from "../text/scroll-text";
@@ -38,71 +38,147 @@ const cardPos = [0, 60, 40, -20];
 
 export default function ExpertiseSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const innerTextRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Select all cards using the "skill-card" class.
+    // Select elements
     const cards = gsap.utils.toArray(".skill-card");
+    const leftCards = cards.slice(0, 2);
+    const rightCards = cards.slice(2, 4);
+    const spans = gsap.utils.toArray(".scattered-text");
+    const span1 = spans.slice(0, 1);
+    const hidespan = spans.slice(1, 4);
 
-    // Create a timeline that pins the section while cards animate in from the left.
-    const tl = gsap.timeline({
+    // Create timeline with an increased scroll distance and longer scrub value.
+    const TimeLine1 = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: "+=1000", // Adjust this value to control how long the pin lasts.
-        scrub: true,
+        end: "+=2000", // Increased scroll distance to slow down the overall progress.
+        scrub: 1.5, // Adds smoothing (1.5-second lag) between scroll and animation progress.
         pin: true,
         anticipatePin: 1,
       },
     });
 
-    tl.from(cards, {
+    // Animate the cards fading in and moving in from the left.
+    TimeLine1.from(cards, {
       x: -200,
       opacity: 0,
-      duration: 1,
+      duration: 1.5, // Slightly longer than before
       ease: "power2.out",
-      stagger: 0.3,
-    });
+      stagger: 0.5, // Increased stagger delay
+    })
+      .to(".expertise-title-container", {
+        opacity: 0,
+        duration: 6, // Slower fade out for the title container
+        ease: "power2.out",
+      })
+      .to(cards, {
+        y: -100,
+        marginTop: 0,
+        duration: 6,
+        ease: "power2.out",
+      })
+      // Label to group the next set of animations
+      .addLabel("split", "+=0")
+      .to(
+        ".inner-text",
+        {
+          opacity: 1,
+          duration: 2,
+          ease: "power2.out",
+        },
+        "split"
+      )
+      .to(
+        leftCards,
+        {
+          x: -700,
+          duration: 18, // Extended duration for a slower slide
+          ease: "power2.out",
+        },
+        "split"
+      )
+      .to(
+        rightCards,
+        {
+          x: 700,
+          duration: 18,
+          ease: "power2.out",
+        },
+        "split"
+      )
+      .to(cards, {
+        opacity: 0,
+        duration: 1.5,
+        ease: "power2.out",
+      })
+      .to(hidespan, {
+        opacity: 0,
+        duration: 18,
+        ease: "power2.out",
+      })
+      .to(span1, {
+        scale: 20,
+        opacity: 0,
+        duration: 45,
+        ease: "power2.out",
+      });
 
     return () => {
-      tl.kill();
+      TimeLine1.kill();
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-6 p-overflow-hidden "
-    >
-      {/* Fixed Title and Subtitle */}
-      <div className="w-full flex flex-col gap-4">
-        <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
-          <ScrollText text="EXPERTISE" triggerRef={sectionRef} />
-        </h2>
-        <p className="max-w-2xl text-xl">
-          Bringing ideas to life with smart solutions and growing with
-          innovation.
-        </p>
-      </div>
+    <div className="container mx-auto p-6 gap-10">
+      <section
+        ref={sectionRef}
+        className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-6 p-overflow-hidden"
+      >
+        {/* Fixed Title and Subtitle */}
+        <div className="w-full flex flex-col gap-4 expertise-title-container">
+          <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
+            <ScrollText text="EXPERTISE" triggerRef={sectionRef} />
+          </h2>
+          <p className="max-w-2xl text-xl">
+            Bringing ideas to life with smart solutions and growing with
+            innovation.
+          </p>
+        </div>
 
-      {/* Grid of Cards */}
-      <div className="grid grid-cols-1 w-full md:grid-cols-2 xl:grid-cols-4">
-        {services.map((service, index) => (
-          <div
-            key={index}
-            className="skill-card relative"
-            style={{ marginTop: `${cardPos[index]}px` }}
-          >
-            <SkillCard
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-            />
-          </div>
-        ))}
-      </div>
-    </section>
+        {/* Grid of Cards */}
+        <div className="grid grid-cols-1 w-full md:grid-cols-2 xl:grid-cols-4">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="skill-card relative"
+              style={{ marginTop: `${cardPos[index]}px` }}
+            >
+              <SkillCard
+                title={service.title}
+                description={service.description}
+                icon={service.icon}
+              />
+            </div>
+          ))}
+        </div>
+        <div
+          ref={innerTextRef}
+          className="absolute inner-text font-bold text-7xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 -z-10 w-full"
+        >
+          <h2 className="text-lg md:text-3xl lg:text-5xl font-bold uppercase text-center relative">
+            <span className="scattered-text inline-block">Explore</span>{" "}
+            <span className="scattered-text inline-block">my</span>{" "}
+            <span className="scattered-text inline-block"> featured</span>{" "}
+            <span className="scattered-text inline-block">works !</span>{" "}
+          </h2>
+        </div>
+      </section>
+    </div>
   );
 }

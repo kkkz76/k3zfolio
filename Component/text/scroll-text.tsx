@@ -24,8 +24,8 @@ export default function ScrollText({ text, triggerRef }: ScrollTextProps) {
         stagger: 0.1,
         scrollTrigger: {
           trigger: triggerRef.current,
-          start: "top 85%",
-          end: "bottom 60%",
+          start: "top bottom",
+          end: "top top",
           scrub: true, // Smooth transition
           toggleActions: "play reverse play reverse", // Replays on scroll up & down
         },

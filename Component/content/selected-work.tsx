@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ScrollText from "../text/scroll-text";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const projects = [
+// Dynamic panel data
+const panelsData = [
   {
     title: "Nexus Nova",
     description: "Digital NFC Card Website",
@@ -23,146 +21,111 @@ const projects = [
   { title: "After the Fall", description: "3D Survival Game", year: "2024" },
 ];
 
+// #17191b96 background color
+
 export default function SelectedWorks() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const horizontalRef = useRef<HTMLDivElement | null>(null);
-  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-    let tween: gsap.core.Tween | undefined;
 
-    const slideWidth =
-      horizontalRef.current?.children[0]?.getBoundingClientRect().width ||
-      window.innerWidth;
+    // Number of panels that animate (all except the last one)
+    const animatedPanelsCount = panelsData.length - 1; // 3 panels
 
-    const updateIndex = (self: globalThis.ScrollTrigger) => {
-      if (!horizontalRef.current) return;
+    // Define durations (in "viewport height" units)
+    const transitionDuration = 0.5; // portion for the slide animation
+    const gapDuration = 0.5; // portion for the gap (delay)
+    const totalDuration =
+      animatedPanelsCount * (transitionDuration + gapDuration);
 
-      const x = Math.abs(Number(gsap.getProperty(horizontalRef.current, "x")));
-      const maxScroll = (projects.length - 1) * slideWidth;
-      const scrollProgress = x / maxScroll;
-      let newIndex = Math.round(scrollProgress * (projects.length - 1));
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        // Total scroll distance needed for animated panels
+        end: () => `+=${window.innerHeight * totalDuration}`,
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
 
-      // Ensure first section "Nexus Nova" is always shown when scrolling back to start
-      if (self.progress <= 0) {
-        newIndex = 0;
-        setActiveIndex(newIndex);
-      }
+    // For each animated panel, add a tween for the slide and then a gap tween.
+    panelsData.slice(0, animatedPanelsCount).forEach((_, index) => {
+      // Tween to slide the panel out
+      tl.to(
+        `.panel-${index}`,
+        {
+          xPercent: 100,
+          ease: "none",
+          duration: transitionDuration,
+        },
+        index * (transitionDuration + gapDuration)
+      );
 
-      if (newIndex !== activeIndex) {
-        setActiveIndex(newIndex);
-      }
+      // Dummy tween for the gap/delay (no properties change)
+      tl.to(
+        {},
+        { duration: gapDuration },
+        index * (transitionDuration + gapDuration) + transitionDuration
+      );
+    });
+
+    // Refresh ScrollTrigger on window resize/zoom changes
+    const handleResize = () => {
+      ScrollTrigger.refresh();
     };
-
-    mm.add("(max-width: 768px)", () => {
-      tween = gsap.to(horizontalRef.current, {
-        x: -((projects.length - 1) * slideWidth),
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${(projects.length - 1) * slideWidth}`,
-          scrub: 3,
-          pin: true,
-          anticipatePin: 1,
-          onUpdate: updateIndex,
-          onScrubComplete: (self) => updateIndex(self),
-        },
-      });
-    });
-
-    mm.add("(min-width: 769px)", () => {
-      tween = gsap.to(horizontalRef.current, {
-        x: -((projects.length - 1) * slideWidth),
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${(projects.length - 1) * slideWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          onUpdate: updateIndex,
-          onScrubComplete: (self) => updateIndex(self),
-        },
-      });
-    });
-
+    window.addEventListener("resize", handleResize);
     return () => {
-      tween?.kill();
+      window.removeEventListener("resize", handleResize);
       ScrollTrigger.getAll().forEach((st) => st.kill());
-      mm.revert();
     };
   }, []);
 
-  // Animate floating text box whenever the active index changes
-  useEffect(() => {
-    gsap.fromTo(
-      ".text-box",
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
-    );
-  }, [activeIndex]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full min-h-dvh flex flex-col justify-center  overflow-hidden"
-    >
-      {/* Fixed Title and Subtitle */}
-      <div className="flex justify-end p-10 ">
-        <div className="flex flex-col gap-4 text-right">
-          <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase">
-            <ScrollText text={"Featured Works"} triggerRef={sectionRef} />
-          </h2>
-          <p className="text-xl">
-            An exciting journey of coding, creating, and always pushing what's
-            possible.
-          </p>
-        </div>
-      </div>
-
-      {/* Horizontal Scroll Content */}
-      <div className="relative flex h-[600px] overflow-hidden ">
-        <div ref={horizontalRef} className="flex flex-nowrap w-full">
-          {projects.map((_, index) => (
+    <>
+      {/* Container height now covers all panels */}
+      <section
+        ref={containerRef}
+        className="relative"
+        style={{ height: `${panelsData.length * 100}vh` }}
+      >
+        {/* Panels container */}
+        <div className="absolute top-0 left-0  h-dvh w-full">
+          {panelsData.map((panel, index) => (
             <div
               key={index}
-              ref={(el) => {
-                projectRefs.current[index] = el;
+              className={`panel panel-${index} absolute top-0 left-0 w-full h-full flex items-center justify-center p-6`}
+              style={{
+                // Stack panels so the first is on top
+                zIndex: panelsData.length - index,
+
+                transform: "translateX(0%)",
               }}
-              className=" w-screen flex-shrink-0 flex flex-col justify-center items-center transition-all duration-500"
             >
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full rounded-4xl overflow-hidden">
                 <Image
                   src="/image/image_1.png"
                   alt="Project Image"
                   fill
-                  className="image-object opacity-60 object-cover hover:scale-120 transition-all duration-700 ease-in-out"
+                  className="object-cover filter grayscale hover:grayscale-0 transition-all ease-in-out duration-500"
                 />
+              </div>
+
+              <div
+                className={` w-full flex flex-col gap-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none `}
+              >
+                <h4 className="text-lg font-semibold">{panel.description}</h4>
+                <h3 className="text-5xl font-extrabold uppercase ">
+                  {panel.title}
+                </h3>
+                <p className="text-md font-extralight">{panel.year}</p>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Floating Text Box */}
-        {projects[activeIndex] && (
-          <div className="w-screen opacity-0 text-box flex flex-col gap-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-            <h4 className="text-lg font-semibold">
-              {projects[activeIndex].description}
-            </h4>
-            <h3 className="text-5xl font-extrabold uppercase ">
-              {projects[activeIndex].title}
-            </h3>
-            <p className="text-md font-extralight">
-              {projects[activeIndex].year}
-            </p>
-          </div>
-        )}
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

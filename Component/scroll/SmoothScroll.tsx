@@ -1,15 +1,25 @@
 "use client";
 
-import { ReactLenis, useLenis } from "lenis/react";
-import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ReactLenis } from "lenis/react";
 
 interface SmoothScrollProps {
   children: React.ReactNode;
 }
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
-  return <ReactLenis root>{children}</ReactLenis>;
+  return (
+    <ReactLenis
+      root
+      options={{
+        duration: 1.2,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        smoothWheel: true,
+        wheelMultiplier: 1.5,
+      }}
+    >
+      {children}
+    </ReactLenis>
+  );
 };
 
 export default SmoothScroll;

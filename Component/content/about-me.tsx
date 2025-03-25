@@ -109,18 +109,19 @@ export default function AboutMe() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className=" relative flex flex-col items-center justify-center max-w-dvw h-screen p-10 text-center overflow-hidden"
-    >
-      {/* Parallax Background Container */}
-      {/* <div
+    <div className="container mx-auto p-6 gap-10">
+      <section
+        ref={sectionRef}
+        className=" relative flex flex-col items-center justify-center max-w-dvw h-screen p-10 text-center overflow-hidden"
+      >
+        {/* Parallax Background Container */}
+        {/* <div
         ref={bgRef}
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: -1 }} // Ensures it's behind the content
       > */}
-      {/* Floating Images inside the parallax container */}
-      {/* {images.map((src, index) => {
+        {/* Floating Images inside the parallax container */}
+        {/* {images.map((src, index) => {
           const pos = floatingPositions[index] || {
             top: "50%",
             left: "50%",
@@ -142,24 +143,25 @@ export default function AboutMe() {
             />
           );
         })} */}
-      {/* </div> */}
+        {/* </div> */}
 
-      {/* Title */}
-      <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold uppercase">
-        <ScrollText text={"Hi, I'm Mario"} triggerRef={sectionRef} />
-      </h2>
+        {/* Title */}
+        <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold uppercase">
+          <ScrollText text={"Hi, I'm Mario"} triggerRef={sectionRef} />
+        </h2>
 
-      {/* Paragraph */}
-      <p className="about-text max-w-2xl text-lg mt-4">
-        A software engineer who passionate about design, innovation, and
-        building experiences that inspire. Exploring the intersection of
-        creativity and technology.
-      </p>
+        {/* Paragraph */}
+        <p className="about-text max-w-2xl text-lg mt-4">
+          A software engineer who passionate about design, innovation, and
+          building experiences that inspire. Exploring the intersection of
+          creativity and technology.
+        </p>
 
-      {/* Explore Button */}
-      <button className="about-text mt-6 px-6 py-3 border-2 border-primary rounded-full hover:bg-primary transition">
-        View Projects
-      </button>
-    </section>
+        {/* Explore Button */}
+        <button className="about-text mt-6 px-6 py-3 border-2 border-primary rounded-full hover:bg-primary transition">
+          View Projects
+        </button>
+      </section>
+    </div>
   );
 }
