@@ -52,7 +52,7 @@ const descriptionVariants = {
 const SkillCard = ({ title, description, icon }: SkillCardProps) => {
   return (
     <motion.div
-      className=" relative flex  mt-15  w-full  min-h-[400px] border border-secondary cursor-pointer overflow-hidden bg-[var(--background)]"
+      className=" relative flex  mt-15  w-full  min-h-[400px] border border-primary cursor-pointer overflow-hidden bg-[var(--background)]"
       variants={OuterCard}
       initial="initial"
       whileHover="hover"

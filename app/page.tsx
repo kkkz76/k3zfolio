@@ -3,6 +3,7 @@ import AnimatedCube from "@/Component/animated/animated-cube";
 import MyTiltCard from "@/Component/card/tilt-card";
 import AboutMe from "@/Component/content/about-me";
 import AutoScrollPage from "@/Component/content/auto-scroll";
+import HomePage from "@/Component/content/color-text";
 import ContactMe from "@/Component/content/contact-me";
 import ExperienceSection from "@/Component/content/experience-section";
 import ExpertiseSection from "@/Component/content/expertise-section";
@@ -20,7 +21,6 @@ export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
       <Landing />
-
       <AboutMe />
       <ExpertiseSection />
       <SelectedWorks />

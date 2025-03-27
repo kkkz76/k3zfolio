@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollText from "../text/scroll-text";
 import SkillCard from "../card/skill-card";
 import { Brain, Cpu, Gamepad2, Globe } from "lucide-react";
+import { div } from "motion/react-client";
 
 const services = [
   {
@@ -145,9 +146,8 @@ export default function ExpertiseSection() {
           <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
             <ScrollText text="EXPERTISE" triggerRef={sectionRef} />
           </h2>
-          <p className="max-w-2xl text-xl">
-            Bringing ideas to life with smart solutions and growing with
-            innovation.
+          <p className="max-w-2xl text-2xl">
+            Bringing ideas to life with creativity and innovation.
           </p>
         </div>
 

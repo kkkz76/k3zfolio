@@ -3,13 +3,14 @@
 @theme {
   --font-sans: var(--font-tt-common-pro, sans-serif);
   --font-mono: var(--font-tt-common-pro-mono, monospace);
-  --background: #232326;
-  --foreground: #FFFFFF;
+  --font-nohemi:var(--font-nohemi), sans-serif;
+  --background: #0D0D0D;
+  --foreground: #F0F0F0;
   --color-varient-1:#DEDAD7;
   --color-varient-2:#232326;
   --color-muted: #94A3B8;
-  --color-primary: #4B5563;
-  --color-secondary: #CBD5E1;
+  --color-primary: #F0F0F0;
+  --color-secondary: #FFFFFF;
  
  
   --color-accent-1: #FE4849;
@@ -17,11 +18,11 @@
   --color-accent-3: #FFC400;
   --color-accent-4: #9282ED;
 }
-
+ 
 
 body {
   color: var(--foreground);
-  background: black;
+  background: var(--background) ;
   font-family: var(--font-sans);
   overflow-x: hidden;
   /* margin-top: 50vh;

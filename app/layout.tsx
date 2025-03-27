@@ -89,6 +89,58 @@ const ttCommonProMono = localFont({
   display: "swap",
 });
 
+export const nohemi = localFont({
+  src: [
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Thin.woff2",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-ExtraLight.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-ExtraBold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi/Nohemi-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-nohemi",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Khant Ko Ko Zaw",
   description: "My Portfolio",
@@ -102,7 +154,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ttCommonPro.variable} ${ttCommonProMono.variable} antialiased`}
+        className={`${ttCommonPro.variable} ${ttCommonProMono.variable} ${nohemi.variable} antialiased`}
       >
         <SmoothScroll>{children}</SmoothScroll>
       </body>

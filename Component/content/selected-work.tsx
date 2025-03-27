@@ -96,7 +96,7 @@ export default function SelectedWorks() {
           {panelsData.map((panel, index) => (
             <div
               key={index}
-              className={`panel panel-${index} absolute top-0 left-0 w-full h-full flex items-center justify-center p-6`}
+              className={`panel panel-${index} absolute top-0 left-0 w-full h-full flex items-center justify-center `}
               style={{
                 // Stack panels so the first is on top
                 zIndex: panelsData.length - index,
@@ -104,7 +104,7 @@ export default function SelectedWorks() {
                 transform: "translateX(0%)",
               }}
             >
-              <div className="relative w-full h-full rounded-4xl overflow-hidden">
+              <div className="relative w-full h-full  overflow-hidden">
                 <Image
                   src="/image/image_1.png"
                   alt="Project Image"

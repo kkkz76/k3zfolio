@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import ScrollText from "../text/scroll-text";
+import { div } from "motion/react-client";
 
 const images = [
   "/image/image_1.png",
@@ -30,46 +31,6 @@ export default function AboutMe() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    // 1. Parallax Background Movement (kept scrubbed for smooth effect)
-    // gsap.fromTo(
-    //   bgRef.current,
-    //   { y: 0 },
-    //   {
-    //     y: -200,
-    //     scrollTrigger: {
-    //       trigger: sectionRef.current, // The scrolling container
-    //       start: "top top", // When the top of the section hits the top of the viewport
-    //       end: "bottom top", // Until the bottom of the section hits the top
-    //       scrub: true,
-    //     },
-    //   }
-    // );
-
-    // 2. Animate Floating Images (fade + slight vertical rise)
-    // gsap.fromTo(
-    //   ".floating-image",
-    //   { opacity: 0, y: 50, rotate: -20 },
-    //   {
-    //     opacity: 0.5,
-    //     y: 0,
-    //     rotate: 0,
-    //     duration: 1.5,
-    //     ease: "power3.out",
-    //     stagger: 0.3,
-    //     scrollTrigger: {
-    //       trigger: sectionRef.current,
-    //       start: "top 40%",
-    //       end: "top 60%",
-    //       scrub: true,
-    //       toggleActions: "play none none none",
-    //     },
-    //   }
-    // );
-
-    // 3. Animate Main Title
-
-    // 4. Animate Paragraph
     gsap.fromTo(
       ".about-text",
       { opacity: 0, y: 30 },
@@ -109,45 +70,13 @@ export default function AboutMe() {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 gap-10">
+    <div className="container mx-auto p-6 gap-10 ">
       <section
         ref={sectionRef}
         className=" relative flex flex-col items-center justify-center max-w-dvw h-screen p-10 text-center overflow-hidden"
       >
-        {/* Parallax Background Container */}
-        {/* <div
-        ref={bgRef}
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: -1 }} // Ensures it's behind the content
-      > */}
-        {/* Floating Images inside the parallax container */}
-        {/* {images.map((src, index) => {
-          const pos = floatingPositions[index] || {
-            top: "50%",
-            left: "50%",
-            rotate: 0,
-          };
-          return (
-            <Image
-              key={index}
-              src={src}
-              alt="Project"
-              width={300}
-              height={200}
-              className="floating-image absolute shadow-lg"
-              style={{
-                top: pos.top,
-                left: pos.left,
-                filter: "grayscale(100%)",
-              }}
-            />
-          );
-        })} */}
-        {/* </div> */}
-
-        {/* Title */}
         <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold uppercase">
-          <ScrollText text={"Hi, I'm Mario"} triggerRef={sectionRef} />
+          <ScrollText text={"my name is mario"} triggerRef={sectionRef} />
         </h2>
 
         {/* Paragraph */}
@@ -159,7 +88,7 @@ export default function AboutMe() {
 
         {/* Explore Button */}
         <button className="about-text mt-6 px-6 py-3 border-2 border-primary rounded-full hover:bg-primary transition">
-          View Projects
+          More About Me
         </button>
       </section>
     </div>

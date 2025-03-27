@@ -9,6 +9,10 @@ const navBarItems = [
     link: "/project",
   },
   {
+    title: "about me",
+    link: "/project",
+  },
+  {
     title: "Contact",
     link: "/contact",
   },
@@ -40,7 +44,7 @@ const Navbar = ({ showNavbar }: NavbarProps) => {
       >
         <HoverText
           className="text-2xl font-thin tracking-widest uppercase cursor-pointer"
-          text="KKKZ"
+          text="K3Z"
         />
         <div className="flex gap-10">
           {navBarItems.map((item, index) => (

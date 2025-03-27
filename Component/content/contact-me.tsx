@@ -56,7 +56,7 @@ const ContactMe = () => {
 
   return (
     <div className="container mx-auto p-6 gap-10">
-      <section className="relative flex flex-col w-full min-h-dvh justify-center items-center bg-[var(--background)] overflow-hidden">
+      <section className="relative flex flex-col w-full min-h-dvh justify-center items-center overflow-hidden">
         <div className="relative flex flex-col gap-4 text-center">
           <h4 className="text-2xl">GOT A PROJECT IN MIND?</h4>
           <h3 className="text-8xl font-bold">LET&apos;S CONNECT</h3>
