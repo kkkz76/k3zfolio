@@ -7,6 +7,8 @@ import Image from "next/image";
 import ScrollText from "../text/scroll-text";
 import { div } from "motion/react-client";
 
+import HoverText from "../text/hover-text";
+
 const images = [
   "/image/image_1.png",
   "/image/image_1.png",
@@ -63,7 +65,7 @@ export default function AboutMe() {
         },
       })
       .to(sectionRef.current, {
-        scale: 1.5,
+        scale: 1.3,
         ease: "power1.out",
         transformOrigin: "center center", // Keep the zoom centered
       });
@@ -76,20 +78,17 @@ export default function AboutMe() {
         className=" relative flex flex-col items-center justify-center max-w-dvw h-screen p-10 text-center overflow-hidden"
       >
         <h2 className="about-title text-lg md:text-xl lg:text-7xl font-bold uppercase">
-          <ScrollText text={"my name is mario"} triggerRef={sectionRef} />
+          <ScrollText text={"The Story of me."} triggerRef={sectionRef} />
         </h2>
 
         {/* Paragraph */}
-        <p className="about-text max-w-2xl text-lg mt-4">
-          A software engineer who passionate about design, innovation, and
-          building experiences that inspire. Exploring the intersection of
-          creativity and technology.
+        <p className="about-text max-w-xl text-2xl mt-4">
+          A burmese software developer who enjoys building clean, creative, and
+          user-focused digital experiences.
         </p>
 
         {/* Explore Button */}
-        <button className="about-text mt-6 px-6 py-3 border-2 border-primary rounded-full hover:bg-primary transition">
-          More About Me
-        </button>
+        {/* <HoverText className="about-text" text={"learn more"} /> */}
       </section>
     </div>
   );

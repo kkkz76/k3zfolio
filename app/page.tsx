@@ -11,6 +11,7 @@ import Filler from "@/Component/content/filler";
 import Landing from "@/Component/content/landing";
 import Navbar from "@/Component/content/navbar";
 import SelectedWorks from "@/Component/content/selected-work";
+import Testing from "@/Component/content/testing";
 import ViewWorks from "@/Component/content/view-work";
 import ZoomIn from "@/Component/content/zoom-in";
 import HoverText from "@/Component/text/hover-text";

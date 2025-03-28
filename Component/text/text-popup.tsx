@@ -27,7 +27,7 @@ const TextPopUp = ({
           y: "0%",
           opacity: 1,
           duration: 0.5,
-          ease: "power2.out",
+          ease: "power1.out",
           stagger: staggerDelay,
           onComplete: onAnimationComplete,
         }

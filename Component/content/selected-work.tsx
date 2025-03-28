@@ -5,77 +5,110 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
-// Dynamic panel data
 const panelsData = [
   {
     title: "Nexus Nova",
-    description: "Digital NFC Card Website",
+    description: "NFC Card Website",
     year: "2024",
+    image: "/image/landing.jpg",
+    smallImage: "/image/image_1.png",
   },
   {
     title: "Echo",
-    description: "Voice-Activated AI Chatbot Application",
+    description: "AI Desktop App",
     year: "2024",
+    image: "/image/image_1.png",
+    smallImage: "/image/landing.jpg",
   },
-  { title: "Super Mario", description: "E-commerce Car Website", year: "2024" },
-  { title: "After the Fall", description: "3D Survival Game", year: "2024" },
+  {
+    title: "Super Mario",
+    description: "E-commerce Car Website",
+    year: "2024",
+    image: "/image/landing.jpg",
+    smallImage: "/image/image_1.png",
+  },
+  {
+    title: "After the Fall",
+    description: "3D Survival Game",
+    year: "2024",
+    image: "/image/image_1.png",
+    smallImage: "/image/landing.jpg",
+  },
 ];
 
-// #17191b96 background color
-
 export default function SelectedWorks() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Number of panels that animate (all except the last one)
-    const animatedPanelsCount = panelsData.length - 1; // 3 panels
+    // Grab panels (top layers) & small images by class
+    const panels = gsap.utils.toArray<HTMLElement>(".panel");
+    const smallImages = gsap.utils.toArray<HTMLElement>(".small-image");
+    const panelInfo = gsap.utils.toArray<HTMLElement>(
+      ".work-title-text-container"
+    );
+    const anotherpanelInfo = gsap.utils.toArray<HTMLElement>(
+      ".another-work-title-text-container"
+    );
 
-    // Define durations (in "viewport height" units)
-    const transitionDuration = 0.5; // portion for the slide animation
-    const gapDuration = 0.5; // portion for the gap (delay)
-    const totalDuration =
-      animatedPanelsCount * (transitionDuration + gapDuration);
-
+    // Build the timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        // Total scroll distance needed for animated panels
-        end: () => `+=${window.innerHeight * totalDuration}`,
-        scrub: true,
+        // Enough scroll for peeling away each panel except last
+        end: () => `+=${window.innerHeight * (panels.length - 1)}`,
+        scrub: 0.5,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+
+        // If you want 50% snapping, uncomment this:
+        snap: {
+          snapTo: (progress: number) => {
+            const step = 1 / (panelsData.length - 1);
+            const lower = Math.floor(progress / step) * step;
+            return progress < lower + step / 2 ? lower : lower + step;
+          },
+          duration: { min: 0.3, max: 0.7 },
+          ease: "power2.inOut",
+        },
       },
     });
 
-    // For each animated panel, add a tween for the slide and then a gap tween.
-    panelsData.slice(0, animatedPanelsCount).forEach((_, index) => {
-      // Tween to slide the panel out
-      tl.to(
-        `.panel-${index}`,
+    // Peel away each panel & matching small image, except the last
+    // (i goes from 0..(length-2))
+    panels.slice(0, -1).forEach((panel, i) => {
+      // Panel from height: 100% → 0%
+      tl.fromTo(
+        panel,
+        { height: "100%" },
+        { height: "0%", duration: 1, ease: "power2.out" },
+        i // timeline position
+      );
+      // Matching small image from height: 100% → 0%
+      tl.fromTo(
+        smallImages[i],
+        { height: "100%" },
         {
-          xPercent: 100,
-          ease: "none",
-          duration: transitionDuration,
+          height: "0%",
+          duration: 1,
+          ease: "power2.out",
         },
-        index * (transitionDuration + gapDuration)
+        i
       );
 
-      // Dummy tween for the gap/delay (no properties change)
-      tl.to(
-        {},
-        { duration: gapDuration },
-        index * (transitionDuration + gapDuration) + transitionDuration
+      tl.fromTo(
+        panelInfo[i + 1],
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power2.out" },
+        i
       );
     });
 
-    // Refresh ScrollTrigger on window resize/zoom changes
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
+    // Refresh on resize
+    const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -84,48 +117,62 @@ export default function SelectedWorks() {
   }, []);
 
   return (
-    <>
-      {/* Container height now covers all panels */}
-      <section
-        ref={containerRef}
-        className="relative"
-        style={{ height: `${panelsData.length * 100}vh` }}
-      >
-        {/* Panels container */}
-        <div className="absolute top-0 left-0  h-dvh w-full">
+    <section
+      ref={containerRef}
+      className="relative"
+      // Container is total scroll area for pinned effect
+      style={{ height: `${panelsData.length * 100}vh` }}
+    >
+      {/* Big background panels, stacked */}
+      <div className="absolute top-0 left-0 w-full h-dvh overflow-hidden">
+        {panelsData.map((panel, index) => (
+          <div
+            key={index}
+            className="panel absolute top-0 left-0 w-full h-full overflow-hidden"
+            style={{ zIndex: panelsData.length - index }}
+          >
+            {/* Background Image (clipped by panel's height) */}
+            <Image
+              src={panel.image}
+              alt={panel.title}
+              width={1920}
+              height={1080}
+              className="w-full h-dvh  object-cover"
+            />
+
+            {/* Optional text */}
+            <div className="absolute top-0 w-full h-dvh">
+              <div className=" relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[40px] text-center text-white z-10 pointer-events-none flex flex-col justify-center items-center px-40 overflow-hidden ">
+                <div className="flex justify-between items-center w-full work-title-text-container relative  ">
+                  <h3 className="text-2xl uppercase">{panel.title}</h3>
+                  <h4 className="text-2xl uppercase">{panel.description}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Center box with small images, also stacked */}
+      <div className="absolute top-0 w-full h-dvh">
+        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30dvh] h-[30dvh] z-50 overflow-hidden pointer-events-none">
           {panelsData.map((panel, index) => (
             <div
               key={index}
-              className={`panel panel-${index} absolute top-0 left-0 w-full h-full flex items-center justify-center `}
-              style={{
-                // Stack panels so the first is on top
-                zIndex: panelsData.length - index,
-
-                transform: "translateX(0%)",
-              }}
+              className="small-image absolute w-full h-full overflow-hidden"
+              style={{ zIndex: panelsData.length - index }}
             >
-              <div className="relative w-full h-full  overflow-hidden">
-                <Image
-                  src="/image/image_1.png"
-                  alt="Project Image"
-                  fill
-                  className="object-cover filter grayscale hover:grayscale-0 transition-all ease-in-out duration-500"
-                />
-              </div>
-
-              <div
-                className={` w-full flex flex-col gap-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none `}
-              >
-                <h4 className="text-lg font-semibold">{panel.description}</h4>
-                <h3 className="text-5xl font-extrabold uppercase ">
-                  {panel.title}
-                </h3>
-                <p className="text-md font-extralight">{panel.year}</p>
-              </div>
+              <Image
+                src={panel.smallImage}
+                alt={panel.title}
+                width={1920}
+                height={1080}
+                className="w-[30dvh] h-[30dvh] object-cover"
+              />
             </div>
           ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

@@ -27,8 +27,8 @@ const WholeTextPopup = ({
         {
           y: 0,
           opacity: 1,
-          duration: 2,
-          ease: "power3.out",
+          duration: 0.7,
+          ease: "power2.out",
           onComplete: onAnimationComplete,
         }
       );
@@ -36,9 +36,11 @@ const WholeTextPopup = ({
   }, [start]);
 
   return (
-    <div className={clsx("overflow-hidden", className)}>
+    <div className={clsx("overflow-hidden ", className)}>
       {/* Apply the ref directly to the <p> */}
-      <p ref={containerRef}>{text}</p>
+      <p ref={containerRef} className="opacity-0">
+        {text}
+      </p>
     </div>
   );
 };

@@ -144,11 +144,11 @@ export default function ExpertiseSection() {
         {/* Fixed Title and Subtitle */}
         <div className="w-full flex flex-col gap-4 expertise-title-container">
           <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
-            <ScrollText text="EXPERTISE" triggerRef={sectionRef} />
+            <ScrollText text="EXPERTISE." triggerRef={sectionRef} />
           </h2>
-          <p className="max-w-2xl text-2xl">
+          {/* <p className="max-w-2xl text-2xl">
             Bringing ideas to life with creativity and innovation.
-          </p>
+          </p> */}
         </div>
 
         {/* Grid of Cards */}
@@ -174,8 +174,8 @@ export default function ExpertiseSection() {
           <h2 className="text-lg md:text-3xl lg:text-5xl font-bold uppercase text-center relative">
             <span className="scattered-text inline-block">Explore</span>{" "}
             <span className="scattered-text inline-block">my</span>{" "}
-            <span className="scattered-text inline-block"> featured</span>{" "}
-            <span className="scattered-text inline-block">works !</span>{" "}
+            <span className="scattered-text inline-block"> selected</span>{" "}
+            <span className="scattered-text inline-block">works</span>{" "}
           </h2>
         </div>
       </section>
