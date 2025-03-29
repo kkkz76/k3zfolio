@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useRef } from "react";
-import ScrollText from "../text/scroll-text";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ExperienceSection from "./experience-section";
-import { div } from "motion/react-client";
+import { useEffect, useRef } from "react";
+import ScrollText from "../text/scroll-text";
+import HoverText from "../text/hover-text";
 
 const ViewWorks = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -47,15 +46,16 @@ const ViewWorks = () => {
           <div className="grid-cols-1 fade-bar bg-[var(--background)] "></div>
           <div className="grid-cols-1 fade-bar bg-[var(--background)] "></div>
         </div>
-        <h2 className="text-4xl font-bold uppercase view-more-text">
+        <h2 className="text-5xl font-bold uppercase view-more-text">
           <ScrollText
-            text={"These are just few of my works."}
+            text={"Continue exploring my work collection"}
             triggerRef={sectionRef}
           />
         </h2>
-        <button className="about-text view-more-text mt-6 px-6 py-3 border-2 border-primary rounded-full hover:bg-primary transition uppercase">
-          View More Projects
+        <button className="about-text view-more-text mt-8 px-6 py-3 border-2 border-primary rounded-lg transition-all duration-300 ease-in-out hover:scale-110 uppercase">
+          <HoverText text={"All Projects"} />
         </button>
+
         <div className="absolute top-0 w-full h-full -z-20 experience-section-container flex justify-center items-center">
           <h2 className="text-6xl font-bold uppercase">More journeys to go</h2>
         </div>

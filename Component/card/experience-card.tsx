@@ -41,22 +41,22 @@ const ExperienceCard = ({ event }: ExperienceCardProps) => {
   return (
     <>
       <motion.div
-        className=" w-full min-h-36  flex items-center justify-center relative overflow-hidden cursor-pointer"
+        className=" w-full min-h-[120px]  flex items-center justify-center relative overflow-hidden cursor-pointer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <h3 className="relative w-full text-5xl uppercase    ">
+        <h3 className="relative w-full text-4xl uppercase    ">
           {event.title}
         </h3>
         {/* The animated white overlay */}
 
         <motion.div
-          className="absolute p-4 top-0 w-full h-full flex justify-between items-center text-black bg-white"
+          className="absolute p-4 top-0 w-full h-full flex justify-between items-center rounded-xl text-black bg-white"
           initial={{ y: "100%" }}
           animate={controls}
         >
-          <h3 className="  text-5xl uppercase">{event.company}</h3>
-          <h3 className=" text-5xl uppercase">{event.date}</h3>
+          <h3 className="  text-4xl uppercase">{event.company}</h3>
+          <h3 className=" text-4xl uppercase">{event.date}</h3>
         </motion.div>
       </motion.div>
     </>

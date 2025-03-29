@@ -7,6 +7,7 @@ import ScrollText from "../text/scroll-text";
 import SkillCard from "../card/skill-card";
 import { Brain, Cpu, Gamepad2, Globe } from "lucide-react";
 import { div } from "motion/react-client";
+import clsx from "clsx";
 
 const services = [
   {
@@ -35,7 +36,12 @@ const services = [
   },
 ];
 
-const cardPos = [0, 60, 40, -20];
+const marginClasses = [
+  "mt-[0px]",
+  "mt-[60px]",
+  "mt-[40px]",
+  "-mt-[20px]", // note: negative margin uses a leading dash.
+];
 
 export default function ExpertiseSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -44,94 +50,104 @@ export default function ExpertiseSection() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Select elements
-    const cards = gsap.utils.toArray(".skill-card");
-    const leftCards = cards.slice(0, 2);
-    const rightCards = cards.slice(2, 4);
-    const spans = gsap.utils.toArray(".scattered-text");
-    const span1 = spans.slice(0, 1);
-    const hidespan = spans.slice(1, 4);
+    // Use gsap.matchMedia() instead of ScrollTrigger.matchMedia({})
+    const mm = gsap.matchMedia();
 
-    // Create timeline with an increased scroll distance and longer scrub value.
-    const TimeLine1 = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "+=2000", // Increased scroll distance to slow down the overall progress.
-        scrub: 1.5, // Adds smoothing (1.5-second lag) between scroll and animation progress.
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
+    // Desktop & Tablet: run animations only when viewport is at least 768px wide.
+    mm.add("(min-width: 1024px)", () => {
+      const cards = gsap.utils.toArray(".skill-card");
+      const leftCards = cards.slice(0, 2);
+      const rightCards = cards.slice(2, 4);
+      const spans = gsap.utils.toArray(".scattered-text");
+      const span1 = spans.slice(0, 1);
+      const hidespan = spans.slice(1, 4);
 
-    // Animate the cards fading in and moving in from the left.
-    TimeLine1.from(cards, {
-      x: -200,
-      opacity: 0,
-      duration: 1.5, // Slightly longer than before
-      ease: "power2.out",
-      stagger: 0.5, // Increased stagger delay
-    })
-      .to(".expertise-title-container", {
-        opacity: 0,
-        duration: 6, // Slower fade out for the title container
-        ease: "power2.out",
-      })
-      .to(cards, {
-        y: -100,
-        marginTop: 0,
-        duration: 6,
-        ease: "power2.out",
-      })
-      // Label to group the next set of animations
-      .addLabel("split", "+=0")
-      .to(
-        ".inner-text",
-        {
-          opacity: 1,
-          duration: 2,
-          ease: "power2.out",
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=2000",
+          scrub: 1.5,
+          pin: true,
+          anticipatePin: 1,
         },
-        "split"
-      )
-      .to(
-        leftCards,
-        {
-          x: -700,
-          duration: 18, // Extended duration for a slower slide
-          ease: "power2.out",
-        },
-        "split"
-      )
-      .to(
-        rightCards,
-        {
-          x: 700,
-          duration: 18,
-          ease: "power2.out",
-        },
-        "split"
-      )
-      .to(cards, {
+      });
+
+      tl.from(cards, {
+        x: -200,
         opacity: 0,
         duration: 1.5,
         ease: "power2.out",
+        stagger: 0.5,
       })
-      .to(hidespan, {
-        opacity: 0,
-        duration: 18,
-        ease: "power2.out",
-      })
-      .to(span1, {
-        scale: 20,
-        opacity: 0,
-        duration: 45,
-        ease: "power2.out",
-      });
+        .to(".expertise-title-container", {
+          opacity: 0,
+          duration: 6,
+          ease: "power2.out",
+        })
+        .to(cards, {
+          y: -100,
+          marginTop: 0,
+          duration: 6,
+          ease: "power2.out",
+        })
+        .addLabel("split", "+=0")
+        .to(
+          ".inner-text",
+          {
+            opacity: 1,
+            duration: 2,
+            ease: "power2.out",
+          },
+          "split"
+        )
+        .to(
+          leftCards,
+          {
+            x: -700,
+            duration: 18,
+            ease: "power2.out",
+          },
+          "split"
+        )
+        .to(
+          rightCards,
+          {
+            x: 700,
+            duration: 18,
+            ease: "power2.out",
+          },
+          "split"
+        )
+        .to(cards, {
+          opacity: 0,
+          duration: 1.5,
+          ease: "power2.out",
+        })
+        .to(hidespan, {
+          opacity: 0,
+          duration: 18,
+          ease: "power2.out",
+        })
+        .to(span1, {
+          scale: 20,
+          opacity: 0,
+          duration: 45,
+          ease: "power2.out",
+        });
+
+      return () => {
+        tl.kill();
+      };
+    });
+
+    // Mobile fallback (optional: add mobile-specific animations here)
+    mm.add("(max-width: 767px)", () => {
+      // For mobile, you can add simple fade-in or keep static.
+    });
 
     return () => {
-      TimeLine1.kill();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      mm.kill();
     };
   }, []);
 
@@ -139,7 +155,7 @@ export default function ExpertiseSection() {
     <div className="container mx-auto p-6 gap-10">
       <section
         ref={sectionRef}
-        className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-6 p-overflow-hidden"
+        className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-6  p-overflow-hidden"
       >
         {/* Fixed Title and Subtitle */}
         <div className="w-full flex flex-col gap-4 expertise-title-container">
@@ -152,12 +168,14 @@ export default function ExpertiseSection() {
         </div>
 
         {/* Grid of Cards */}
-        <div className="grid grid-cols-1 w-full md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 w-full lg:grid-cols-4">
           {services.map((service, index) => (
             <div
               key={index}
-              className="skill-card relative"
-              style={{ marginTop: `${cardPos[index]}px` }}
+              className={clsx(
+                "skill-card relative mt-0",
+                `lg:${marginClasses[index]}`
+              )}
             >
               <SkillCard
                 title={service.title}

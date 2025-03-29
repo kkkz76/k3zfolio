@@ -141,11 +141,20 @@ export default function SelectedWorks() {
             />
 
             {/* Optional text */}
-            <div className="absolute top-0 w-full h-dvh">
-              <div className=" relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[40px] text-center text-white z-10 pointer-events-none flex flex-col justify-center items-center px-40 overflow-hidden ">
-                <div className="flex justify-between items-center w-full work-title-text-container relative  ">
-                  <h3 className="text-2xl uppercase">{panel.title}</h3>
-                  <h4 className="text-2xl uppercase">{panel.description}</h4>
+            <div className="absolute top-0 w-full h-dvh z-40  ">
+              <div
+                className="relative lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 top-30 left-0
+                  w-full h-[80px] lg:h-[40px] text-center text-white  
+                  pointer-events-none flex flex-col lg:flex-row justify-between items-center 
+                  px-4 lg:px-20 overflow-hidden  "
+              >
+                <div className="flex flex-col lg:flex-row justify-between items-center w-full work-title-text-container relative h-full">
+                  <h3 className="text-xl lg:text-2xl uppercase">
+                    {panel.title}
+                  </h3>
+                  <h4 className="text-xl lg:text-2xl uppercase">
+                    {panel.description}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -155,7 +164,7 @@ export default function SelectedWorks() {
 
       {/* Center box with small images, also stacked */}
       <div className="absolute top-0 w-full h-dvh">
-        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30dvh] h-[30dvh] z-50 overflow-hidden pointer-events-none">
+        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30dvh] h-[30dvh] z-20 overflow-hidden pointer-events-none">
           {panelsData.map((panel, index) => (
             <div
               key={index}

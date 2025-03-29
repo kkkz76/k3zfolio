@@ -7,9 +7,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 interface ScrollTextProps {
   text: string;
   triggerRef: React.RefObject<HTMLElement | null>;
+  startColor?: string;
+  endColor?: string;
 }
 
-export default function ScrollText({ text, triggerRef }: ScrollTextProps) {
+export default function ScrollText({
+  text,
+  triggerRef,
+  startColor = "#4B5563",
+  endColor = "#FFFFFF",
+}: ScrollTextProps) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     if (!triggerRef.current) return;
@@ -18,9 +25,9 @@ export default function ScrollText({ text, triggerRef }: ScrollTextProps) {
 
     gsap.fromTo(
       chars,
-      { color: "#4B5563" }, // Grey at start
+      { color: startColor }, // Grey at start
       {
-        color: "#FFFFFF", // White on scroll down
+        color: endColor, // White on scroll down
         stagger: 0.1,
         scrollTrigger: {
           trigger: triggerRef.current,
