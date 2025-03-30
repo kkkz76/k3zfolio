@@ -3,7 +3,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Brain, Cpu, Gamepad2, Globe } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import SkillCard from "../card/skill-card";
 import ScrollText from "../text/scroll-text";
 

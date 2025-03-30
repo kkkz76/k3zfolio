@@ -47,7 +47,7 @@ const ExperienceSection = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top bottom",
-          end: "+=1000",
+          end: "top top",
           scrub: 1.5,
         },
       });
