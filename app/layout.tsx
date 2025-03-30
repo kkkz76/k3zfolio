@@ -146,8 +146,50 @@ const nohemi = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Khant Ko Ko Zaw",
-  description: "My Portfolio",
+  title: "K3Z - Software Developer",
+  description:
+    "Welcome to the portfolio of Khant Ko Ko Zaw. Let's build something amazing together.",
+  keywords: [
+    "Khant Ko Ko Zaw",
+    "portfolio",
+    "full stack developer",
+    "web development",
+    "software developer",
+    "software development",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "developer portfolio",
+    "portfolio website",
+  ],
+  openGraph: {
+    title: "K3Z - Software Developer",
+    description:
+      "Welcome to the portfolio of Khant Ko Ko Zaw. Let's build something amazing together.",
+    url: "https://k3zfolio.vercel.app/", // Replace with your actual URL
+    siteName: "K3Z - Software Developer",
+    images: [
+      {
+        url: "/image/seo_img.jpg", // Replace with your actual image URL
+        width: 1200,
+        height: 630,
+        alt: "Khant Ko Ko Zaw Portfolio",
+      },
+    ],
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
