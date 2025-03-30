@@ -1,7 +1,6 @@
 import GlobalResizeHandler from "@/Component/content/global-resize-handler";
 import NavbarWrapper from "@/Component/content/navbar-wrapper";
 import { NavbarProvider } from "@/Component/context/navbar-controller";
-import RouteReloader from "@/Component/route/route-reloader";
 import ScrollResetHandler from "@/Component/scroll/scroll-reset-handler";
 import SmoothScroll from "@/Component/scroll/SmoothScroll";
 import type { Metadata } from "next";
