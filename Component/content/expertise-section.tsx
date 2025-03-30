@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ScrollText from "../text/scroll-text";
-import SkillCard from "../card/skill-card";
 import { Brain, Cpu, Gamepad2, Globe } from "lucide-react";
-import { div } from "motion/react-client";
-import clsx from "clsx";
+import { useEffect, useRef } from "react";
+import SkillCard from "../card/skill-card";
+import ScrollText from "../text/scroll-text";
 
 const services = [
   {
@@ -36,12 +34,7 @@ const services = [
   },
 ];
 
-const marginClasses = [
-  "mt-[0px]",
-  "mt-[60px]",
-  "mt-[40px]",
-  "-mt-[20px]", // note: negative margin uses a leading dash.
-];
+// const marginClasses = ["mt-[0px]", "mt-[60px]", "mt-[40px]", "-mt-[20px]"];
 
 export default function ExpertiseSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -141,11 +134,6 @@ export default function ExpertiseSection() {
       };
     });
 
-    // Mobile fallback (optional: add mobile-specific animations here)
-    mm.add("(max-width: 767px)", () => {
-      // For mobile, you can add simple fade-in or keep static.
-    });
-
     return () => {
       mm.kill();
     };
@@ -159,7 +147,7 @@ export default function ExpertiseSection() {
       >
         {/* Fixed Title and Subtitle */}
         <div className="w-full flex flex-col gap-4 expertise-title-container">
-          <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold uppercase text-left">
             <ScrollText text="EXPERTISE." triggerRef={sectionRef} />
           </h2>
           {/* <p className="max-w-2xl text-2xl">
@@ -170,13 +158,7 @@ export default function ExpertiseSection() {
         {/* Grid of Cards */}
         <div className="grid grid-cols-1 w-full lg:grid-cols-4">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className={clsx(
-                "skill-card relative mt-0",
-                `lg:${marginClasses[index]}`
-              )}
-            >
+            <div key={index} className="skill-card relative">
               <SkillCard
                 title={service.title}
                 description={service.description}

@@ -15,9 +15,7 @@ export default function Home() {
       <SelectedWorks />
       <ViewWorks />
       <ExperienceSection />
-      {/* <Filler /> */}
       <ContactMe />
-      {/* <AnimatedCube /> */}
     </main>
   );
 }

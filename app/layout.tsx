@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import SmoothScroll from "@/Component/scroll/SmoothScroll";
+import GlobalResizeHandler from "@/Component/content/global-resize-handler";
 
 /* Load TT Common Pro font */
 const ttCommonPro = localFont({
@@ -89,7 +90,7 @@ const ttCommonProMono = localFont({
   display: "swap",
 });
 
-export const nohemi = localFont({
+const nohemi = localFont({
   src: [
     {
       path: "../public/fonts/Nohemi/Nohemi-Thin.woff2",
@@ -156,7 +157,8 @@ export default function RootLayout({
       <body
         className={`${ttCommonPro.variable} ${ttCommonProMono.variable} ${nohemi.variable} antialiased`}
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        <GlobalResizeHandler />
+        <SmoothScroll> {children}</SmoothScroll>
       </body>
     </html>
   );

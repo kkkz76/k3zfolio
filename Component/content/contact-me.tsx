@@ -8,7 +8,7 @@ import HoverText from "../text/hover-text";
 gsap.registerPlugin(ScrollTrigger);
 
 const ContactMe = () => {
-  // Ref for the entire section that triggers the animation
+  // Refs for DOM elements
   const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const topCircleRef = useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ const ContactMe = () => {
         ease: "power3.out",
       });
 
-      // Animate circle container with a scale effect when section reaches center
+      // Animate circle container with a scale effect
       gsap.from(containerRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -47,7 +47,7 @@ const ContactMe = () => {
         ease: "power3.out",
       });
 
-      // Animate footer when section reaches center of viewport
+      // Animate footer on scroll
       gsap.from(footerRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -62,6 +62,7 @@ const ContactMe = () => {
     }
   }, []);
 
+  // Mouse move animation for the top circle
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!containerRef.current || !topCircleRef.current) return;
 
@@ -90,6 +91,7 @@ const ContactMe = () => {
     });
   };
 
+  // Reset circle position on mouse leave
   const handleMouseLeave = () => {
     if (!topCircleRef.current) return;
     gsap.to(topCircleRef.current, {
@@ -105,22 +107,26 @@ const ContactMe = () => {
       <div className="container mx-auto p-6 gap-10">
         <section
           ref={sectionRef}
-          className="relative flex flex-col w-full min-h-dvh justify-center items-center overflow-hidden"
+          className="relative flex flex-col w-full min-h-screen justify-center items-center overflow-hidden"
         >
           <div
             ref={textContainerRef}
             className="relative flex flex-col gap-4 text-center"
           >
-            <h4 className="text-2xl">GOT A PROJECT IN MIND?</h4>
-            <h3 className="text-8xl font-bold">LET&apos;S CONNECT</h3>
+            <h4 className="text-xl sm:text-2xl md:text-3xl">
+              GOT A PROJECT IN MIND?
+            </h4>
+            <h3 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+              LET&apos;S CONNECT
+            </h3>
             <div
               ref={containerRef}
               className="pointer-events-auto w-full h-20 flex justify-center items-center mt-5"
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              {/* Bottom circle (STAYS IN PLACE) */}
-              <div className="relative w-20 h-20 rounded-full border border-black flex items-center justify-center cursor-pointer">
+              {/* Bottom circle (static) */}
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border border-black flex items-center justify-center cursor-pointer">
                 <svg
                   width="24"
                   height="24"
@@ -130,9 +136,10 @@ const ContactMe = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 ></svg>
+                {/* Animated top circle */}
                 <div
                   ref={topCircleRef}
-                  className="absolute top-0 left-0 w-20 h-20 rounded-full border border-black flex items-center justify-center cursor-pointer"
+                  className="absolute top-0 left-0 w-full h-full rounded-full border border-black flex items-center justify-center cursor-pointer"
                 >
                   <svg
                     width="24"
@@ -151,23 +158,23 @@ const ContactMe = () => {
           </div>
           <footer
             ref={footerRef}
-            className="absolute bottom-0 w-full min-h-40 justify-center flex flex-col gap-4 p-6"
+            className="absolute bottom-0 w-full min-h-[10rem] flex flex-col gap-4 p-6"
           >
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full flex flex-col lg:flex-row justify-between items-center">
               <div>
-                <h3 className="text-xl uppercase">
-                  Feel Free to connect me on social
+                <h3 className="text-md lg:text-xl uppercase">
+                  Feel Free to connect with me on social
                 </h3>
               </div>
-              <div className="flex uppercase gap-8">
-                <HoverText text={"linkedIn"} />
-                <HoverText text={"Github"} />
-                <HoverText text={"Instagram"} />
-                <HoverText text={"Resume"} />
+              <div className="flex flex-wrap uppercase gap-4 sm:gap-8 mt-4 sm:mt-0">
+                <HoverText text="linkedIn" />
+                <HoverText text="Github" />
+                <HoverText text="Instagram" />
+                <HoverText text="Resume" />
               </div>
             </div>
-            <p className="uppercase text-xs font-extralight">
-              Made with Love by mario
+            <p className="uppercase text-xs font-extralight text-center lg:text-left">
+              Made with Love by K3Z
             </p>
           </footer>
         </section>

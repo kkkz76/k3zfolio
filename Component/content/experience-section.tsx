@@ -40,7 +40,7 @@ const ExperienceSection = () => {
         className=" flex flex-col items-center justify-center w-full overflow-hidden gap-10 min-h-dvh "
       >
         <div className="w-full flex flex-col gap-4 ">
-          <h2 className="text-lg md:text-xl lg:text-7xl font-bold uppercase text-left">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold uppercase text-left">
             <ScrollText text="EXPERIENCE." triggerRef={sectionRef} />
           </h2>
         </div>

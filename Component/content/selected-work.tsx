@@ -48,9 +48,6 @@ export default function SelectedWorks() {
     const panelInfo = gsap.utils.toArray<HTMLElement>(
       ".work-title-text-container"
     );
-    const anotherpanelInfo = gsap.utils.toArray<HTMLElement>(
-      ".another-work-title-text-container"
-    );
 
     // Build the timeline
     const tl = gsap.timeline({
@@ -65,15 +62,15 @@ export default function SelectedWorks() {
         invalidateOnRefresh: true,
 
         // If you want 50% snapping, uncomment this:
-        snap: {
-          snapTo: (progress: number) => {
-            const step = 1 / (panelsData.length - 1);
-            const lower = Math.floor(progress / step) * step;
-            return progress < lower + step / 2 ? lower : lower + step;
-          },
-          duration: { min: 0.3, max: 0.7 },
-          ease: "power2.inOut",
-        },
+        // snap: {
+        //   snapTo: (progress: number) => {
+        //     const step = 1 / (panelsData.length - 1);
+        //     const lower = Math.floor(progress / step) * step;
+        //     return progress < lower + step / 2 ? lower : lower + step;
+        //   },
+        //   duration: { min: 0.3, max: 0.7 },
+        //   ease: "power2.inOut",
+        // },
       },
     });
 

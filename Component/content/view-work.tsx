@@ -25,16 +25,12 @@ const ViewWorks = () => {
       opacity: 0, // Shrinks width to 0 (center squeeze effect)
       duration: 1,
       ease: "power2.out",
-    })
-      .to(".fade-bar", {
-        scaleX: 0, // Shrinks width to 0 (center squeeze effect)
+    }).to(".fade-bar", {
+      scaleX: 0, // Shrinks width to 0 (center squeeze effect)
 
-        duration: 0.5,
-        ease: "power1.out",
-      })
-      .set(".experience-section-container", {
-        zIndex: 10,
-      });
+      duration: 0.5,
+      ease: "power1.out",
+    });
   }, []);
   return (
     <div className="container mx-auto p-6 gap-10">
@@ -46,18 +42,22 @@ const ViewWorks = () => {
           <div className="grid-cols-1 fade-bar bg-[var(--background)] "></div>
           <div className="grid-cols-1 fade-bar bg-[var(--background)] "></div>
         </div>
-        <h2 className="text-5xl font-bold uppercase view-more-text">
-          <ScrollText
-            text={"Continue exploring my work collection"}
-            triggerRef={sectionRef}
-          />
-        </h2>
-        <button className="about-text view-more-text mt-8 px-6 py-3 border-2 border-primary rounded-lg transition-all duration-300 ease-in-out hover:scale-110 uppercase">
-          <HoverText text={"All Projects"} />
-        </button>
+        <div className="view-more-text">
+          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold uppercase ">
+            <ScrollText
+              text={"Continue exploring my work"}
+              triggerRef={sectionRef}
+            />
+          </h2>
+          <button className=" mt-8 px-4 py-2 border-2 border-primary rounded-lg transition-all duration-300 ease-in-out hover:scale-105 uppercase">
+            <HoverText className="text-sm" text={"View All Projects"} />
+          </button>
+        </div>
 
-        <div className="absolute top-0 w-full h-full -z-20 experience-section-container flex justify-center items-center">
-          <h2 className="text-6xl font-bold uppercase">More journeys to go</h2>
+        <div className="absolute top-0 w-full h-full -z-20 flex justify-center items-center">
+          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold uppercase">
+            More journeys to go
+          </h2>
         </div>
       </section>
     </div>

@@ -2,19 +2,12 @@
 import React, { useEffect, useRef } from "react";
 import HoverText from "../text/hover-text";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
 
 const navBarItems = [
   {
     title: "Project",
     link: "/project",
-  },
-  {
-    title: "about me",
-    link: "/project",
-  },
-  {
-    title: "Contact",
-    link: "/contact",
   },
 ];
 
@@ -24,6 +17,8 @@ interface NavbarProps {
 
 const Navbar = ({ showNavbar }: NavbarProps) => {
   const NavRef = useRef<HTMLElement | null>(null);
+
+  const router = useRouter();
   useEffect(() => {
     if (NavRef.current && showNavbar) {
       gsap.from(".navbar", {
@@ -48,11 +43,13 @@ const Navbar = ({ showNavbar }: NavbarProps) => {
         />
         <div className="flex gap-10">
           {navBarItems.map((item, index) => (
-            <HoverText
-              key={index}
-              className="text-lg font-thin tracking-wide uppercase cursor-pointer"
-              text={item.title}
-            />
+            <button key={index} onClick={() => router.push(item.link)}>
+              {" "}
+              <HoverText
+                className="text-lg font-thin tracking-wide uppercase cursor-pointer"
+                text={item.title}
+              />
+            </button>
           ))}
         </div>
       </nav>
