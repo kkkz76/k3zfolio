@@ -52,7 +52,7 @@ const descriptionVariants = {
 const SkillCard = ({ title, description, icon }: SkillCardProps) => {
   return (
     <motion.div
-      className=" relative flex  mt-15  w-full  min-h-[400px] border border-primary cursor-pointer overflow-hidden bg-[var(--background)]"
+      className=" relative flex w-full min-h-[300px] md:min-h-[400px] border border-primary cursor-pointer overflow-hidden bg-[var(--background)]"
       variants={OuterCard}
       initial="initial"
       whileHover="hover"
@@ -68,7 +68,7 @@ const SkillCard = ({ title, description, icon }: SkillCardProps) => {
             className="max-w-0 overflow-hidden"
             variants={arrowVariants}
           >
-            <ArrowRight className="text-inherit size-12" />
+            <ArrowRight className="text-inherit size-8 md:size-12" />
           </motion.div>
 
           {/* Icon (Shifts when Arrow Appears) */}

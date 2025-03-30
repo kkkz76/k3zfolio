@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
 import HoverText from "../text/hover-text";
 import gsap from "gsap";
@@ -6,54 +7,67 @@ import { useRouter } from "next/navigation";
 
 const navBarItems = [
   {
-    title: "Project",
+    title: "Projects",
     link: "/project",
   },
 ];
 
 interface NavbarProps {
   showNavbar: boolean;
+  isDarkText: boolean;
 }
 
-const Navbar = ({ showNavbar }: NavbarProps) => {
+const Navbar = ({ showNavbar, isDarkText }: NavbarProps) => {
   const NavRef = useRef<HTMLElement | null>(null);
-
   const router = useRouter();
+
   useEffect(() => {
-    if (NavRef.current && showNavbar) {
-      gsap.from(".navbar", {
-        duration: 1,
-        opacity: 0,
-        y: 40,
-        stagger: 0.1,
-        ease: "power1.out",
-      });
+    if (!NavRef.current) return;
+    const el = NavRef.current;
+
+    if (showNavbar) {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 40 },
+        {
+          pointerEvents: "auto",
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power1.out",
+        }
+      );
+    } else {
+      gsap.set(el, { opacity: 0, pointerEvents: "none" });
     }
-    console.log("Showing navbar");
   }, [showNavbar]);
+
   return (
-    showNavbar && (
-      <nav
-        ref={NavRef}
-        className="navbar  fixed top-0 w-full min-h-20 flex items-center justify-between px-20 z-50 "
-      >
+    <nav
+      ref={NavRef}
+      className="fixed top-0 w-full min-h-24 flex items-center justify-between px-6 lg:px-20 z-50 "
+    >
+      <button onClick={() => router.push("/")}>
         <HoverText
-          className="text-2xl font-thin tracking-widest uppercase cursor-pointer"
+          className={`text-md lg:text-2xl tracking-widest uppercase cursor-pointer ${
+            isDarkText ? "text-black" : "text-white"
+          } `}
           text="K3Z"
         />
-        <div className="flex gap-10">
-          {navBarItems.map((item, index) => (
-            <button key={index} onClick={() => router.push(item.link)}>
-              {" "}
-              <HoverText
-                className="text-lg font-thin tracking-wide uppercase cursor-pointer"
-                text={item.title}
-              />
-            </button>
-          ))}
-        </div>
-      </nav>
-    )
+      </button>
+      <div className="flex gap-10">
+        {navBarItems.map((item, index) => (
+          <button key={index} onClick={() => router.push(item.link)}>
+            <HoverText
+              className={`text-sm lg:text-xl font-thin  uppercase cursor-pointer ${
+                isDarkText ? "text-black" : "text-white"
+              }`}
+              text={item.title}
+            />
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 };
 

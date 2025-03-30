@@ -3,7 +3,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Brain, Cpu, Gamepad2, Globe } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import SkillCard from "../card/skill-card";
 import ScrollText from "../text/scroll-text";
 
@@ -12,25 +12,25 @@ const services = [
     title: "Website",
     description:
       "Turning caffeine and code into pixel-perfect websites. No, I don’t use Wix.",
-    icon: <Globe className="size-12" />,
+    icon: <Globe className="size-10 md:size-12" />,
   },
   {
     title: "Game",
     description:
       "Designing games that make you forget about sleep... and your responsibilities.",
-    icon: <Gamepad2 className="size-12" />,
+    icon: <Gamepad2 className="size-10 md:size-12" />,
   },
   {
     title: "AI",
     description:
       "Developing AI that can hold a conversation—just not about your life choices.",
-    icon: <Brain className="size-12" />,
+    icon: <Brain className="size-10 md:size-12" />,
   },
   {
     title: "Software",
     description:
       "Writing code that (mostly) doesn’t break. Debugging is just bonus content.",
-    icon: <Cpu className="size-12" />,
+    icon: <Cpu className="size-10 md:size-12" />,
   },
 ];
 
@@ -40,125 +40,150 @@ export default function ExpertiseSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const innerTextRef = useRef<HTMLDivElement | null>(null);
 
+  gsap.registerPlugin(ScrollTrigger);
+
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Use gsap.matchMedia() instead of ScrollTrigger.matchMedia({})
     const mm = gsap.matchMedia();
+    gsap.set(".skill-card", { opacity: 1, x: 0, y: 0 });
 
-    // Desktop & Tablet: run animations only when viewport is at least 768px wide.
     mm.add("(min-width: 1024px)", () => {
-      const cards = gsap.utils.toArray(".skill-card");
-      const leftCards = cards.slice(0, 2);
-      const rightCards = cards.slice(2, 4);
-      const spans = gsap.utils.toArray(".scattered-text");
-      const span1 = spans.slice(0, 1);
-      const hidespan = spans.slice(1, 4);
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray(".skill-card");
+        const leftCards = cards.slice(0, 2);
+        const rightCards = cards.slice(2, 4);
+        const spans = gsap.utils.toArray(".scattered-text");
+        const span1 = spans.slice(0, 1);
+        const hidespan = spans.slice(1, 4);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=2000",
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=2000",
+            scrub: 1.5,
+            pin: true,
+            anticipatePin: 1,
+          },
+        });
 
-      tl.from(cards, {
-        x: -200,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power2.out",
-        stagger: 0.5,
-      })
-        .to(".expertise-title-container", {
-          opacity: 0,
-          duration: 6,
-          ease: "power2.out",
-        })
-        .to(cards, {
-          y: -100,
-          marginTop: 0,
-          duration: 6,
-          ease: "power2.out",
-        })
-        .addLabel("split", "+=0")
-        .to(
-          ".inner-text",
-          {
-            opacity: 1,
-            duration: 2,
-            ease: "power2.out",
-          },
-          "split"
-        )
-        .to(
-          leftCards,
-          {
-            x: -700,
-            duration: 18,
-            ease: "power2.out",
-          },
-          "split"
-        )
-        .to(
-          rightCards,
-          {
-            x: 700,
-            duration: 18,
-            ease: "power2.out",
-          },
-          "split"
-        )
-        .to(cards, {
+        tl.from(cards, {
+          x: -200,
           opacity: 0,
           duration: 1.5,
           ease: "power2.out",
+          stagger: 0.5,
         })
-        .to(hidespan, {
-          opacity: 0,
-          duration: 18,
-          ease: "power2.out",
-        })
-        .to(span1, {
-          scale: 20,
-          opacity: 0,
-          duration: 45,
-          ease: "power2.out",
-        });
+          .to(".expertise-title-container", {
+            opacity: 0,
+            duration: 6,
+            ease: "power2.out",
+          })
+          .to(cards, {
+            y: -100,
+            marginTop: 0,
+            duration: 6,
+            ease: "power2.out",
+          })
+          .addLabel("split", "+=0")
+          .to(
+            ".inner-text",
+            {
+              opacity: 1,
+              duration: 2,
+              ease: "power2.out",
+            },
+            "split"
+          )
+          .to(
+            leftCards,
+            {
+              x: -700,
+              duration: 18,
+              ease: "power2.out",
+            },
+            "split"
+          )
+          .to(
+            rightCards,
+            {
+              x: 700,
+              duration: 18,
+              ease: "power2.out",
+            },
+            "split"
+          )
+          .to(cards, {
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out",
+          })
+          .to(hidespan, {
+            opacity: 0,
+            duration: 18,
+            ease: "power2.out",
+          })
+          .to(span1, {
+            scale: 20,
+            opacity: 0,
+            duration: 45,
+            ease: "power2.out",
+          });
+        ScrollTrigger.refresh();
 
-      return () => {
-        tl.kill();
-      };
+        return () => ctx.revert();
+      }, sectionRef); // 👈 context scoped to this section
     });
 
-    return () => {
-      mm.kill();
-    };
+    mm.add("(max-width: 1023px)", () => {
+      const ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray(".skill-card");
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top center",
+            end: "+=2000",
+            scrub: 1.5,
+          },
+        });
+
+        tl.from(cards, {
+          x: -200,
+          opacity: 0,
+          duration: 1.5,
+          ease: "power2.out",
+          stagger: 0.5,
+        }).to(".expertise-title-container", {
+          opacity: 0,
+          duration: 6,
+          ease: "power2.out",
+        });
+        ScrollTrigger.refresh();
+
+        return () => ctx.revert();
+      }, sectionRef);
+    });
+
+    return () => mm.kill();
   }, []);
 
   return (
-    <div className="container mx-auto p-6 gap-10">
+    <div className="container mx-auto p-6">
       <section
         ref={sectionRef}
-        className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-6  p-overflow-hidden"
+        className="relative w-full min-h-dvh flex flex-col items-center justify-center gap-10"
       >
         {/* Fixed Title and Subtitle */}
-        <div className="w-full flex flex-col gap-4 expertise-title-container">
+        <div className="w-full flex flex-col expertise-title-container">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold uppercase text-left">
             <ScrollText text="EXPERTISE." triggerRef={sectionRef} />
           </h2>
-          {/* <p className="max-w-2xl text-2xl">
-            Bringing ideas to life with creativity and innovation.
-          </p> */}
         </div>
 
         {/* Grid of Cards */}
-        <div className="grid grid-cols-1 w-full lg:grid-cols-4">
+        <div className="grid grid-cols-1 w-full lg:grid-cols-4 ">
           {services.map((service, index) => (
-            <div key={index} className="skill-card relative">
+            <div key={index} className="skill-card">
               <SkillCard
                 title={service.title}
                 description={service.description}

@@ -27,7 +27,7 @@ export default function AboutMe() {
       });
 
       // Step 1: Slight scale of the section (title effect)
-      timeline.to(sectionRef.current, {
+      timeline.to(titleRef.current, {
         scale: 1.2,
         ease: "power1.out",
         transformOrigin: "center center",
@@ -45,13 +45,14 @@ export default function AboutMe() {
         },
         ">0.2" // Start after title finishes scaling
       );
+      ScrollTrigger.refresh();
     }, sectionRef);
 
     return () => ctx.revert(); // Kill everything on unmount
   }, []);
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 ">
+    <div className="container mx-auto p-6 ">
       <section
         ref={sectionRef}
         className="relative flex flex-col items-center justify-center text-center min-h-screen overflow-hidden"
@@ -59,7 +60,7 @@ export default function AboutMe() {
         {/* Title */}
         <h2
           ref={titleRef}
-          className="text-xl sm:text-3xl lg:text-7xl font-bold uppercase"
+          className="text-2xl sm:text-3xl lg:text-7xl font-bold uppercase"
         >
           <ScrollText text="The Story of me." triggerRef={sectionRef} />
         </h2>
@@ -67,13 +68,12 @@ export default function AboutMe() {
         {/* Paragraph */}
         <p
           ref={paragraphRef}
-          className="mt-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 
-             max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-4xl 
-             text-balance leading-relaxed"
+          className="mt-10 text-2xl xl:text-3xl 
+             max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-4xl  "
         >
-          A Burmese software developer passionate about building clean,
-          creative, and user-focused digital experiences. Currently working as a
-          freelance developer based in Singapore.
+          A Burmese software developer passionate about developing
+          creative,clean and user-focused digital experiences. Currently active
+          as a freelance developer based in Singapore.
         </p>
       </section>
     </div>

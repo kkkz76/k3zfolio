@@ -1,8 +1,12 @@
+import GlobalResizeHandler from "@/Component/content/global-resize-handler";
+import NavbarWrapper from "@/Component/content/navbar-wrapper";
+import { NavbarProvider } from "@/Component/context/navbar-controller";
+import RouteReloader from "@/Component/route/route-reloader";
+import ScrollResetHandler from "@/Component/scroll/scroll-reset-handler";
+import SmoothScroll from "@/Component/scroll/SmoothScroll";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import SmoothScroll from "@/Component/scroll/SmoothScroll";
-import GlobalResizeHandler from "@/Component/content/global-resize-handler";
 
 /* Load TT Common Pro font */
 const ttCommonPro = localFont({
@@ -158,7 +162,13 @@ export default function RootLayout({
         className={`${ttCommonPro.variable} ${ttCommonProMono.variable} ${nohemi.variable} antialiased`}
       >
         <GlobalResizeHandler />
-        <SmoothScroll> {children}</SmoothScroll>
+        <SmoothScroll>
+          <NavbarProvider>
+            <ScrollResetHandler />
+            <NavbarWrapper />
+            <main className="flex flex-col gap-20 ">{children}</main>
+          </NavbarProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

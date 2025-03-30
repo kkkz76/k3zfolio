@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import ScrollText from "../text/scroll-text";
 import HoverText from "../text/hover-text";
+import { useNavbar } from "../context/navbar-controller";
 
 const ViewWorks = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,7 @@ const ViewWorks = () => {
       ease: "power1.out",
     });
   }, []);
+
   return (
     <div className="container mx-auto p-6 gap-10">
       <section
@@ -43,7 +45,7 @@ const ViewWorks = () => {
           <div className="grid-cols-1 fade-bar bg-[var(--background)] "></div>
         </div>
         <div className="view-more-text">
-          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold uppercase ">
+          <h2 className="text-sm md:text-xl lg:text-3xl font-bold uppercase ">
             <ScrollText
               text={"Continue exploring my work"}
               triggerRef={sectionRef}
@@ -55,7 +57,7 @@ const ViewWorks = () => {
         </div>
 
         <div className="absolute top-0 w-full h-full -z-20 flex justify-center items-center">
-          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold uppercase">
+          <h2 className="text-md md:text-2xl lg:text-4xl font-bold uppercase">
             More journeys to go
           </h2>
         </div>

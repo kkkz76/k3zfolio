@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverText from "../text/hover-text";
+import { useNavbar } from "../context/navbar-controller";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -15,6 +16,24 @@ const ContactMe = () => {
   const textContainerRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
+  const { setIsDarkText } = useNavbar();
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!sectionRef.current) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top top",
+      end: "bottom bottom",
+      onEnter: () => setIsDarkText(true),
+      onLeaveBack: () => setIsDarkText(false),
+    });
+
+    return () => trigger.kill();
+  }, []);
+
   useEffect(() => {
     if (
       sectionRef.current &&
@@ -22,43 +41,49 @@ const ContactMe = () => {
       containerRef.current &&
       footerRef.current
     ) {
-      // Animate text container when section reaches center of viewport
-      gsap.from(textContainerRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "center center",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 1.2,
-        ease: "power3.out",
+      const ctx = gsap.context(() => {
+        // Create one timeline with shared ScrollTrigger
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top center",
+          },
+        });
+
+        // Text container animation
+        tl.from(textContainerRef.current, {
+          opacity: 0,
+          y: 50,
+          duration: 1.2,
+          ease: "power3.out",
+        });
+
+        // Circle container animation (delayed relative to previous)
+        tl.from(
+          containerRef.current,
+          {
+            opacity: 0,
+            scale: 0.5,
+            duration: 1.2,
+            ease: "power3.out",
+          },
+          "-=0.6"
+        ); // Overlap start by 0.9s for natural delay
+
+        // Footer animation (delayed relative to previous)
+        tl.from(
+          footerRef.current,
+          {
+            opacity: 0,
+            y: 50,
+            duration: 1.2,
+            ease: "power3.out",
+          },
+          "-=0.6"
+        );
       });
 
-      // Animate circle container with a scale effect
-      gsap.from(containerRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "center center",
-        },
-        opacity: 0,
-        scale: 0.5,
-        duration: 1.2,
-        delay: 0.3,
-        ease: "power3.out",
-      });
-
-      // Animate footer on scroll
-      gsap.from(footerRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "center center",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 1.2,
-        delay: 0.6,
-        ease: "power3.out",
-      });
+      return () => ctx.revert();
     }
   }, []);
 
@@ -107,7 +132,7 @@ const ContactMe = () => {
       <div className="container mx-auto p-6 gap-10">
         <section
           ref={sectionRef}
-          className="relative flex flex-col w-full min-h-screen justify-center items-center overflow-hidden"
+          className="relative flex flex-col w-full min-h-dvh justify-center items-center overflow-hidden"
         >
           <div
             ref={textContainerRef}
@@ -162,11 +187,11 @@ const ContactMe = () => {
           >
             <div className="w-full flex flex-col lg:flex-row justify-between items-center">
               <div>
-                <h3 className="text-md lg:text-xl uppercase">
+                <h3 className="text-xs md:text:sm lg:text-xl uppercase">
                   Feel Free to connect with me on social
                 </h3>
               </div>
-              <div className="flex flex-wrap uppercase gap-4 sm:gap-8 mt-4 sm:mt-0">
+              <div className="flex flex-wrap uppercase gap-2 text-xs sm:gap-4 mt-4 ">
                 <HoverText text="linkedIn" />
                 <HoverText text="Github" />
                 <HoverText text="Instagram" />

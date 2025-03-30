@@ -56,7 +56,7 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
       }
     );
     gsap.to(frontImageRef.current, {
-      width: "100%",
+      height: "100%",
       duration: 0.4,
       ease: "power1.out",
     });
@@ -77,7 +77,7 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
       }
     );
     gsap.to(frontImageRef.current, {
-      width: "0%",
+      height: "0%",
       duration: 0.4,
       ease: "power1.in",
     });
@@ -124,18 +124,17 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
 
       {/* Center box with front image */}
       <div className="absolute top-0 w-full h-full ">
-        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20vh] lg:w-[30vh] h-[20vh] lg:h-[30vh] z-20 overflow-hidden pointer-events-none">
+        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20dvh] lg:w-[30dvh] h-[20dvh] lg:h-[30dvh] z-20 overflow-hidden pointer-events-none rounded-xl">
           <div
             ref={frontImageRef}
-            className="w-full md:w-[0%]  h-full overflow-hidden "
+            className="w-full h-full lg:h-[0%]   overflow-hidden absolute "
           >
-            {" "}
             <Image
               src={project.frontImage}
               alt={project.title}
               width={1920}
               height={1080}
-              className="w-[20vh] lg:w-[30vh] h-[20vh] lg:h-[30vh] object-cover"
+              className="w-[20dvh] lg:w-[30dvh] h-[20dvh] lg:h-[30dvh] object-cover"
             />
           </div>
         </div>

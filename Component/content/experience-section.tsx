@@ -1,7 +1,10 @@
 "use client";
-import { useRef } from "react";
+
+import { useEffect, useRef } from "react";
 import ExperienceCard from "../card/experience-card";
 import ScrollText from "../text/scroll-text";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const events = [
   {
@@ -33,23 +36,54 @@ const events = [
 
 const ExperienceSection = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray(".experience-card-container");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "+=1000",
+          scrub: 1.5,
+        },
+      });
+
+      tl.from(cards, {
+        x: -200,
+        opacity: 0,
+        duration: 2,
+        ease: "power3.inOut",
+        stagger: 0.6,
+      });
+
+      // Optional: refresh to fix layout shifts
+      ScrollTrigger.refresh();
+    }, sectionRef); // ✅ scoped to this component
+
+    return () => ctx.revert(); // ✅ cleanup on unmount
+  }, []);
+
   return (
-    <div className="container mx-auto p-6 gap-10 ">
+    <div className="container mx-auto p-6 gap-10">
       <section
         ref={sectionRef}
-        className=" flex flex-col items-center justify-center w-full overflow-hidden gap-10 min-h-dvh "
+        className="flex flex-col items-center justify-center w-full overflow-hidden gap-10 min-h-dvh"
       >
-        <div className="w-full flex flex-col gap-4 ">
+        <div className="w-full flex flex-col gap-4">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold uppercase text-left">
             <ScrollText text="EXPERIENCE." triggerRef={sectionRef} />
           </h2>
         </div>
 
-        {/* Fixed Title and Subtitle */}
-
         <div className="relative flex flex-col items-center w-full">
           {events.map((event, index) => (
-            <ExperienceCard event={event} key={index} />
+            <div className="experience-card-container w-full" key={index}>
+              <ExperienceCard event={event} />
+            </div>
           ))}
         </div>
       </section>
