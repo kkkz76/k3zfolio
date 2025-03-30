@@ -1,4 +1,3 @@
-import GlobalResizeHandler from "@/Component/content/global-resize-handler";
 import NavbarWrapper from "@/Component/content/navbar-wrapper";
 import { NavbarProvider } from "@/Component/context/navbar-controller";
 import ScrollResetHandler from "@/Component/scroll/scroll-reset-handler";
