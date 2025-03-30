@@ -202,7 +202,7 @@ export default function RootLayout({
       <body
         className={`${ttCommonPro.variable} ${ttCommonProMono.variable} ${nohemi.variable} antialiased`}
       >
-        <GlobalResizeHandler />
+        {/* <GlobalResizeHandler /> */}
         <SmoothScroll>
           <NavbarProvider>
             <ScrollResetHandler />

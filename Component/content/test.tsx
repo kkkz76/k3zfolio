@@ -26,6 +26,7 @@ export default function Test() {
           end: "+=1000",
           scrub: 0.5,
           pin: true,
+          anticipatePin: 1,
         },
       });
     }, container);
@@ -38,7 +39,9 @@ export default function Test() {
 
   const handleNavigation = () => {
     // Revert GSAP animations to clean up any pinned elements
-
+    if (gsapContextRef.current) {
+      gsapContextRef.current.revert();
+    }
     router.push("/project");
   };
 

@@ -7,6 +7,8 @@ import { useEffect, useRef } from "react";
 import SkillCard from "../card/skill-card";
 import ScrollText from "../text/scroll-text";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const services = [
   {
     title: "Website",
@@ -34,24 +36,25 @@ const services = [
   },
 ];
 
-// const marginClasses = ["mt-[0px]", "mt-[60px]", "mt-[40px]", "-mt-[20px]"];
-
 export default function ExpertiseSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const innerTextRef = useRef<HTMLDivElement | null>(null);
 
-  gsap.registerPlugin(ScrollTrigger);
-
   useEffect(() => {
     const mm = gsap.matchMedia();
+    // Ensure skill cards start visible
     gsap.set(".skill-card", { opacity: 1, x: 0, y: 0 });
 
+    // We'll collect all GSAP contexts here
+    const contexts: gsap.Context[] = [];
+
+    // Desktop animation
     mm.add("(min-width: 1024px)", () => {
       const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray(".skill-card");
+        const cards = gsap.utils.toArray<HTMLElement>(".skill-card");
         const leftCards = cards.slice(0, 2);
         const rightCards = cards.slice(2, 4);
-        const spans = gsap.utils.toArray(".scattered-text");
+        const spans = gsap.utils.toArray<HTMLElement>(".scattered-text");
         const span1 = spans.slice(0, 1);
         const hidespan = spans.slice(1, 4);
 
@@ -129,14 +132,14 @@ export default function ExpertiseSection() {
             ease: "power2.out",
           });
         ScrollTrigger.refresh();
-
-        return () => ctx.revert();
-      }, sectionRef); // 👈 context scoped to this section
+      }, sectionRef);
+      contexts.push(ctx);
     });
 
+    // Mobile animation
     mm.add("(max-width: 1023px)", () => {
       const ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray(".skill-card");
+        const cards = gsap.utils.toArray<HTMLElement>(".skill-card");
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -159,12 +162,15 @@ export default function ExpertiseSection() {
           ease: "power2.out",
         });
         ScrollTrigger.refresh();
-
-        return () => ctx.revert();
       }, sectionRef);
+      contexts.push(ctx);
     });
 
-    return () => mm.kill();
+    // Cleanup: revert all GSAP contexts and kill matchMedia
+    return () => {
+      contexts.forEach((ctx) => ctx.revert());
+      mm.kill();
+    };
   }, []);
 
   return (
@@ -193,13 +199,13 @@ export default function ExpertiseSection() {
           ))}
         </div>
         <div
-          ref={innerTextRef}
           className="absolute inner-text font-bold text-7xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 -z-10 w-full"
+          ref={innerTextRef}
         >
           <h2 className="text-lg md:text-3xl lg:text-5xl font-bold uppercase text-center relative">
             <span className="scattered-text inline-block">Explore</span>{" "}
             <span className="scattered-text inline-block">my</span>{" "}
-            <span className="scattered-text inline-block"> selected</span>{" "}
+            <span className="scattered-text inline-block">selected</span>{" "}
             <span className="scattered-text inline-block">works</span>{" "}
           </h2>
         </div>

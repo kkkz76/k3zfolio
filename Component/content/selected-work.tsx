@@ -63,6 +63,7 @@ export default function SelectedWorks() {
               : "+=0",
           scrub: 0.5,
           pin: true,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -90,7 +91,13 @@ export default function SelectedWorks() {
   }, []);
 
   useLayoutEffect(() => {
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("resize", handleResize);
+
     return () => {
+      window.removeEventListener("resize", handleResize);
       // Clean up the GSAP context on unmount
       if (ctxRef.current) {
         ctxRef.current.revert();
