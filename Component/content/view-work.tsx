@@ -5,9 +5,11 @@ import { useEffect, useRef } from "react";
 import ScrollText from "../text/scroll-text";
 import HoverText from "../text/hover-text";
 import { useNavbar } from "../context/navbar-controller";
+import { useRouter } from "next/navigation";
 
 const ViewWorks = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const element = sectionRef.current;
@@ -51,7 +53,10 @@ const ViewWorks = () => {
               triggerRef={sectionRef}
             />
           </h2>
-          <button className=" mt-8 px-4 py-2 border-2 border-primary rounded-lg transition-all duration-300 ease-in-out hover:scale-105 uppercase">
+          <button
+            onClick={() => router.push("/project")}
+            className=" mt-8 px-4 py-2 border-2 border-primary rounded-lg transition-all duration-300 ease-in-out hover:scale-105 uppercase"
+          >
             <HoverText className="text-sm" text={"View All Projects"} />
           </button>
         </div>

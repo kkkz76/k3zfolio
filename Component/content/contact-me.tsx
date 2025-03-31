@@ -8,6 +8,14 @@ import { useNavbar } from "../context/navbar-controller";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
+const info = {
+  linkedin: "https://www.linkedin.com/in/khantkokozaw38/",
+  github: "https://github.com/kkkz76",
+  instragram: "https://www.instagram.com/khantko.kozaw.37/",
+  resume:
+    "https://drive.google.com/file/d/1nMLc3c_yO5nlreDmvwKfb9mfpA2g2TvX/view?usp=sharing",
+};
+
 const ContactMe = () => {
   // Refs for DOM elements
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -145,6 +153,9 @@ const ContactMe = () => {
               LET&apos;S CONNECT
             </h3>
             <div
+              onClick={() => {
+                window.location.href = "mailto:khantkokozawwork@gmail.com";
+              }}
               ref={containerRef}
               className="pointer-events-auto w-full h-20 flex justify-center items-center mt-5"
               onMouseMove={handleMouseMove}
@@ -192,10 +203,18 @@ const ContactMe = () => {
                 </h3>
               </div>
               <div className="flex flex-wrap uppercase gap-2 text-xs sm:gap-4 mt-4 ">
-                <HoverText text="linkedIn" />
-                <HoverText text="Github" />
-                <HoverText text="Instagram" />
-                <HoverText text="Resume" />
+                <div onClick={() => window.open(info.linkedin, "_blank")}>
+                  <HoverText text="linkedIn" />
+                </div>
+                <div onClick={() => window.open(info.github, "_blank")}>
+                  <HoverText text="Github" />
+                </div>
+                <div onClick={() => window.open(info.instragram, "_blank")}>
+                  <HoverText text="Instagram" />
+                </div>
+                <div onClick={() => window.open(info.resume, "_blank")}>
+                  <HoverText text="Resume" />
+                </div>
               </div>
             </div>
             <p className="uppercase text-xs font-extralight text-center lg:text-left">

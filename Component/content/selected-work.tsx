@@ -10,29 +10,33 @@ const panelsData = [
     title: "Nexus Nova",
     description: "NFC Card Website",
     year: "2024",
-    image: "/image/landing.jpg",
-    smallImage: "/image/image_1.png",
+    image: "/image/projects/nexusnova_bg.jpg",
+    smallImage: "/image/projects/nexusnova_small.png",
+    link: "https://nexus-ten-nu.vercel.app/",
   },
   {
     title: "Echo",
     description: "AI Desktop App",
     year: "2024",
-    image: "/image/image_1.png",
-    smallImage: "/image/landing.jpg",
+    image: "/image/projects/test.jpg",
+    smallImage: "/image/projects/askvox_small.png",
+    link: "https://askvox-marketing.vercel.app/",
   },
   {
     title: "Super Mario",
     description: "E-commerce Car Website",
     year: "2024",
-    image: "/image/landing.jpg",
-    smallImage: "/image/image_1.png",
+    image: "/image/projects/supermario_bg.jpg",
+    smallImage: "/image/projects/supermario_small.png",
+    link: "https://super-mario-bay.vercel.app/",
   },
   {
     title: "After the Fall",
     description: "3D Survival Game",
     year: "2024",
-    image: "/image/image_1.png",
-    smallImage: "/image/landing.jpg",
+    image: "/image/projects/afterthefall_bg.jpg",
+    smallImage: "/image/projects/afterthefall_small.png",
+    link: "",
   },
 ];
 
@@ -128,7 +132,7 @@ export default function SelectedWorks() {
             />
 
             {/* Optional text */}
-            <div className="absolute top-0 w-full h-dvh z-40  ">
+            <div className="absolute top-0 w-full h-dvh z-40 pointer-events-none ">
               <div
                 className="relative lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 top-30 left-0
                   w-full h-[80px] lg:h-[40px] text-center text-white  
@@ -151,11 +155,12 @@ export default function SelectedWorks() {
 
       {/* Center box with small images, also stacked */}
       <div className="absolute top-0 w-full h-dvh">
-        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20dvh] h-[20dvh] lg:w-[30dvh] lg:h-[30dvh] z-20 overflow-hidden pointer-events-none rounded-md">
+        <div className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20dvh] h-[20dvh] lg:w-[40dvh] lg:h-[40dvh] z-20 overflow-hidden pointer-events-none rounded-lg">
           {panelsData.map((panel, index) => (
             <div
               key={index}
-              className="small-image absolute w-full h-full overflow-hidden"
+              className="small-image absolute w-full h-full overflow-hidden cursor-pointer pointer-events-auto"
+              onClick={() => window.open(panel.link, "_blank")}
               style={{ zIndex: panelsData.length - index }}
             >
               <Image
@@ -163,7 +168,7 @@ export default function SelectedWorks() {
                 alt={panel.title}
                 width={1920}
                 height={1080}
-                className="w-[20dvh] h-[20dvh] lg:w-[30dvh] lg:h-[30dvh] object-cover"
+                className="w-[20dvh] h-[20dvh] lg:w-[40dvh] lg:h-[40dvh] object-cover"
               />
             </div>
           ))}

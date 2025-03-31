@@ -3,11 +3,12 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 export interface Project {
-  id: string;
   title: string;
   description: string;
-  backImage: string;
-  frontImage: string;
+  year: string;
+  image: string;
+  smallImage: string;
+  link: string;
 }
 
 interface ProjectTemplateProps {
@@ -88,17 +89,18 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="w-full aspect-square relative overflow-hidden rounded-xl"
+      className="w-full aspect-square relative overflow-hidden rounded-xl cursor-pointer"
+      onClick={() => window.open(project.link, "_blank")}
     >
       {/* Background Image with pointer events disabled */}
       <Image
-        src={project.backImage}
+        src={project.image}
         alt={project.title}
         fill
         className="object-cover pointer-events-none"
         sizes="100vw"
         placeholder="blur"
-        blurDataURL={project.backImage}
+        blurDataURL={project.image}
       />
 
       {/* Optional text overlay */}
@@ -130,7 +132,7 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
             className="w-full h-full lg:h-[0%]   overflow-hidden absolute "
           >
             <Image
-              src={project.frontImage}
+              src={project.smallImage}
               alt={project.title}
               width={1920}
               height={1080}

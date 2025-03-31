@@ -1,37 +1,41 @@
 "use client";
 import ContactMe from "@/Component/content/contact-me";
-import ProjectTemplate, { Project } from "@/Component/content/project-template";
+import ProjectTemplate from "@/Component/content/project-template";
 import { useNavbar } from "@/Component/context/navbar-controller";
 import { useEffect } from "react";
 
-const projects: Project[] = [
+const panelsData = [
   {
-    id: "1",
-    title: "NEXUS NOVA ",
-    description: " Website",
-    backImage: "/image/image_1.png",
-    frontImage: "/image/landing.jpg",
+    title: "Nexus Nova",
+    description: "NFC Card Website",
+    year: "2024",
+    image: "/image/projects/nexusnova_bg.jpg",
+    smallImage: "/image/projects/nexusnova_small.png",
+    link: "https://nexus-ten-nu.vercel.app/",
   },
   {
-    id: "2",
-    title: "NEXUS NOVA ",
-    description: "Website",
-    backImage: "/image/image_1.png",
-    frontImage: "/image/landing.jpg",
+    title: "Echo",
+    description: "AI Desktop App",
+    year: "2024",
+    image: "/image/projects/test.jpg",
+    smallImage: "/image/projects/askvox_small.png",
+    link: "https://askvox-marketing.vercel.app/",
   },
   {
-    id: "3",
-    title: "NEXUS NOVA ",
-    description: "Website",
-    backImage: "/image/image_1.png",
-    frontImage: "/image/landing.jpg",
+    title: "Super Mario",
+    description: "E-commerce Car Website",
+    year: "2024",
+    image: "/image/projects/supermario_bg.jpg",
+    smallImage: "/image/projects/supermario_small.png",
+    link: "https://super-mario-bay.vercel.app/",
   },
   {
-    id: "4",
-    title: "NEXUS NOVA ",
-    description: " Website",
-    backImage: "/image/image_1.png",
-    frontImage: "/image/landing.jpg",
+    title: "After the Fall",
+    description: "3D Survival Game",
+    year: "2024",
+    image: "/image/projects/afterthefall_bg.jpg",
+    smallImage: "/image/projects/afterthefall_small.png",
+    link: "",
   },
 ];
 
@@ -52,7 +56,7 @@ export default function ProjectCollectionPage() {
 
           {/* Projects Grid */}
           <div className="mt-20 grid grid-cols-1 xl:grid-cols-2 gap-3">
-            {projects.map((project, index) => (
+            {panelsData.map((project, index) => (
               <ProjectTemplate key={index} project={project} />
             ))}
           </div>
