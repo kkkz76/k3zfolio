@@ -45,9 +45,6 @@ export default function ExpertiseSection() {
     // Ensure skill cards start visible
     gsap.set(".skill-card", { opacity: 1, x: 0, y: 0 });
 
-    // We'll collect all GSAP contexts here
-    const contexts: gsap.Context[] = [];
-
     // Desktop animation
     mm.add("(min-width: 1024px)", () => {
       const ctx = gsap.context(() => {
@@ -62,7 +59,7 @@ export default function ExpertiseSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top top",
-            end: "+=2000",
+            end: () => `+=${window.innerHeight * 2}`,
             scrub: 1.5,
             pin: true,
             anticipatePin: 1,
@@ -133,7 +130,10 @@ export default function ExpertiseSection() {
           });
         ScrollTrigger.refresh();
       }, sectionRef);
-      contexts.push(ctx);
+      return () => {
+        ctx.revert();
+        ScrollTrigger.refresh();
+      };
     });
 
     // Mobile animation
@@ -145,7 +145,7 @@ export default function ExpertiseSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top center",
-            end: "+=2000",
+            end: () => `+=${window.innerHeight * 2}`,
             scrub: 1.5,
           },
         });
@@ -163,12 +163,11 @@ export default function ExpertiseSection() {
         });
         ScrollTrigger.refresh();
       }, sectionRef);
-      contexts.push(ctx);
+      return () => ctx.revert();
     });
 
     // Cleanup: revert all GSAP contexts and kill matchMedia
     return () => {
-      contexts.forEach((ctx) => ctx.revert());
       mm.kill();
     };
   }, []);

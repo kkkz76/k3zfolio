@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 const panelsData = [
   {
@@ -38,7 +38,6 @@ const panelsData = [
 
 export default function SelectedWorks() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-
   const ctxRef = useRef<gsap.Context | null>(null);
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function SelectedWorks() {
         scrollTrigger: {
           trigger: container, // use the container directly
           start: "top top",
-          end:
+          end: () =>
             panels.length > 1
               ? `+=${window.innerHeight * (panels.length - 1)}`
               : "+=0",

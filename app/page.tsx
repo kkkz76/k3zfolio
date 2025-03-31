@@ -9,7 +9,6 @@ import ViewWorks from "@/Component/content/view-work";
 export default function Home() {
   return (
     <>
-      {/* <Test /> */}
       <Landing />
       <AboutMe />
       <ExpertiseSection />

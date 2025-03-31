@@ -5,6 +5,7 @@ import SmoothScroll from "@/Component/scroll/SmoothScroll";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import GlobalResizeHandler from "@/Component/content/global-resize-handler";
 
 /* Load TT Common Pro font */
 const ttCommonPro = localFont({
@@ -201,7 +202,7 @@ export default function RootLayout({
       <body
         className={`${ttCommonPro.variable} ${ttCommonProMono.variable} ${nohemi.variable} antialiased`}
       >
-        {/* <GlobalResizeHandler /> */}
+        <GlobalResizeHandler />
         <SmoothScroll>
           <NavbarProvider>
             <ScrollResetHandler />
