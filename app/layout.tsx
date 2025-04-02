@@ -6,12 +6,13 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import GlobalResizeHandler from "@/Component/content/global-resize-handler";
+import { Analytics } from "@vercel/analytics/next";
 
 /* Load TT Common Pro font */
 const ttCommonPro = localFont({
   src: [
     {
-      path: "../public/fonts/TTCommonsProTrialThin.woff2", // ✅ Fix path
+      path: "../public/fonts/TTCommonsProTrialThin.woff2",
       weight: "100",
       style: "normal",
     },
@@ -210,6 +211,7 @@ export default function RootLayout({
             <main className="flex flex-col gap-20 ">{children}</main>
           </NavbarProvider>
         </SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );
