@@ -151,6 +151,7 @@ export const metadata: Metadata = {
   description:
     "Welcome to the portfolio of Khant Ko Ko Zaw. Let's build something amazing together.",
   keywords: [
+    "k3zfolio",
     "Khant Ko Ko Zaw",
     "portfolio",
     "full stack developer",
