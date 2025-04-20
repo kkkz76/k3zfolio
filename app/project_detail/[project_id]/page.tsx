@@ -141,10 +141,10 @@ const mockProjectData = [
   {
     id: "8",
     title: "K3Z Portfolio",
-    type: "Game",
+    type: "Website",
     description:
       "K3Z Portfolio is a sleek, interactive digital showcase built to highlight the work, skills, and personality of a modern creative developer. Designed with a minimalist dark theme and subtle animations, the portfolio presents projects, experiences, and personal branding in an elegant and engaging format.",
-    technologies: ["Next.js", "Tailwind CSS", "GASP", "Motion"],
+    technologies: ["Next.js", "Tailwind CSS", "GSAP", "Framer Motion"],
     liveUrl: "https://k3zfolio.vercel.app/",
     images: ["/image/k3z/ss1.png"],
   },
