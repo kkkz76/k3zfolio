@@ -3,10 +3,12 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 const panelsData = [
   {
+    id: "1",
     title: "Nexus Nova",
     description: "NFC Card Website",
     year: "2024",
@@ -15,14 +17,16 @@ const panelsData = [
     link: "https://nexus-ten-nu.vercel.app/",
   },
   {
+    id: "4",
     title: "Echo",
     description: "AI Desktop App",
     year: "2024",
-    image: "/image/projects/test.jpg",
+    image: "/image/projects/askvox_bg.jpg",
     smallImage: "/image/projects/askvox_small.png",
     link: "https://askvox-marketing.vercel.app/",
   },
   {
+    id: "5",
     title: "Super Mario",
     description: "E-commerce Car Website",
     year: "2024",
@@ -31,6 +35,7 @@ const panelsData = [
     link: "https://super-mario-bay.vercel.app/",
   },
   {
+    id: "6",
     title: "After the Fall",
     description: "3D Survival Game",
     year: "2024",
@@ -43,6 +48,7 @@ const panelsData = [
 export default function SelectedWorks() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const ctxRef = useRef<gsap.Context | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -160,7 +166,9 @@ export default function SelectedWorks() {
             <div
               key={index}
               className="small-image absolute w-full h-full overflow-hidden cursor-pointer pointer-events-auto"
-              onClick={() => window.open(panel.link, "_blank")}
+              onClick={() => {
+                router.push(`/project_detail/${panel.id}`);
+              }}
               style={{ zIndex: panelsData.length - index }}
             >
               <Image

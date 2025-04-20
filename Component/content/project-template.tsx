@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
+import { useRouter } from "next/navigation";
 
 export interface Project {
+  id: string;
   title: string;
   description: string;
   year: string;
@@ -16,6 +18,7 @@ interface ProjectTemplateProps {
 }
 
 const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const textOverlayRef = useRef<HTMLDivElement>(null);
   const frontImageRef = useRef<HTMLDivElement>(null);
@@ -90,7 +93,9 @@ const ProjectTemplate = ({ project }: ProjectTemplateProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="w-full aspect-square relative overflow-hidden rounded-xl cursor-pointer"
-      onClick={() => window.open(project.link, "_blank")}
+      onClick={() => {
+        router.push(`/project_detail/${project.id}`);
+      }}
     >
       {/* Background Image with pointer events disabled */}
       <Image

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 const panelsData = [
   {
+    id: "1",
     title: "Nexus Nova",
     description: "Website",
     year: "2024",
@@ -14,6 +15,7 @@ const panelsData = [
     link: "https://nexus-ten-nu.vercel.app/",
   },
   {
+    id: "2",
     title: "Echo (Admin)",
     description: "Website",
     year: "2024",
@@ -22,6 +24,7 @@ const panelsData = [
     link: "https://askvox-admin.vercel.app/",
   },
   {
+    id: "3",
     title: "Echo (Marketing)",
     description: "Website",
     year: "2024",
@@ -30,6 +33,7 @@ const panelsData = [
     link: "https://askvox-marketing.vercel.app/",
   },
   {
+    id: "4",
     title: "Echo (Main APP)",
     description: "Desktop App",
     year: "2024",
@@ -38,6 +42,7 @@ const panelsData = [
     link: "",
   },
   {
+    id: "5",
     title: "Super Mario",
     description: "Website",
     year: "2024",
@@ -46,6 +51,7 @@ const panelsData = [
     link: "https://super-mario-bay.vercel.app/",
   },
   {
+    id: "6",
     title: "After the Fall",
     description: "3D Game",
     year: "2024",
@@ -54,6 +60,7 @@ const panelsData = [
     link: "",
   },
   {
+    id: "7",
     title: "VR House",
     description: "VR Game",
     year: "2024",
@@ -62,6 +69,7 @@ const panelsData = [
     link: "",
   },
   {
+    id: "8",
     title: "K3Z Porfolio",
     description: "Website",
     year: "2025",
